@@ -2,6 +2,9 @@
 
 Bypass Paywalls is a web browser extension to help bypass paywalls for selected sites.
 
+This is a fork from the amazing [bypass-paywalls-chrome](https://github.com/iamadamdev/bypass-paywalls-chrome)
+by [iamadamdev](https://github.com/iamadamdev/) with only minor modifications for personal use and experimentation.
+
 ![Newspaper Logo for Bypass Paywalls](src/icons/bypass-dark.png)
 
 ## Installation Instructions
