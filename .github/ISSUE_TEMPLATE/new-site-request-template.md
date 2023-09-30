@@ -4,10 +4,9 @@ about: New site request
 title: 'New site request: [site here]'
 labels: new site request
 assignees: ''
-
 ---
 
-### New site requests - Before submitting an issue please read the following:
+### New site requests - Before submitting an issue please read the following
 
 Only large or major sites will be considered. Usually premium articles cannot be bypassed as they are behind a hard paywall.
 
