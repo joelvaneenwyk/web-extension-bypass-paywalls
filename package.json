@@ -1,0 +1,24 @@
+{
+  "author": "imadamdev",
+  "bugs": {
+    "url": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls/issues"
+  },
+  "description": "Bypass News Sites' Paywalls",
+  "homepage": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls#readme",
+  "keywords": [
+    "extension",
+    "paywalls"
+  ],
+  "license": "MIT",
+  "main": "src/js/common.js",
+  "name": "browser-extension-bypass-paywalls",
+  "packageManager": "yarn@3.6.3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
