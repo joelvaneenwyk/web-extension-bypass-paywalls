@@ -2,6 +2,8 @@
  * Bypass Paywalls
  */
 
+import { extensionApi } from './common';
+
 if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'elmundo.es', 'scmp.com', 'nytimes.com'])) {
   window.localStorage.clear();
 }
@@ -213,7 +215,7 @@ if (matchDomain('elmercurio.com')) {
     const hiddenImage = document.querySelectorAll('img');
     for (const image of hiddenImage) {
       const src = image.src;
-      if ('src: ' + src.indexOf('.gif') !== -1) {
+      if (src.indexOf('.gif') !== -1) {
         const dataSrc = image.getAttribute('data-src');
         if (dataSrc) {
           image.setAttribute('src', dataSrc);
@@ -252,10 +254,11 @@ if (matchDomain('elmercurio.com')) {
   const paywall = document.querySelector('div#paywall-background-color');
   removeDOMElement(paywall);
   if (paywall) {
-    extensionApi.runtime.sendMessage({ request: 'refreshCurrentTab' });
+    // #todo #jve Reenable after determining correct type.
+    // extensionApi.runtime.sendMessage({ request: 'refreshCurrentTab' });
   }
   window.setTimeout(function () {
-    const meter = document.querySelector('[id*="highlight-meter-"]');
+    const meter = document.querySelector<HTMLElement>('[id*="highlight-meter-"]');
     if (meter) {
       meter.hidden = true;
     }
@@ -323,7 +326,10 @@ if (matchDomain('elmercurio.com')) {
     }
   }, 500);
 } else if (matchDomain('leparisien.fr')) {
-  window.removeEventListener('scroll', this.scrollListener);
+  const _this: undefined | any = this;
+  if (_this !== undefined) {
+    window.removeEventListener('scroll', _this.scrollListener);
+  }
   const paywall = document.querySelector('.relative.piano-paywall.below_nav.sticky');
   removeDOMElement(paywall);
   setTimeout(function () {
@@ -402,10 +408,10 @@ if (matchDomain('elmercurio.com')) {
       removeDOMElement(snippet);
       window.location.href = url.replace('barrons.com', 'barrons.com/amp');
     }
-    const signinLinks = document.querySelectorAll('a.primary-button--link[href*="target="]');
-    for (const signinLink of signinLinks) {
-      signinLink.href = decodeURIComponent(signinLink.href.split('target=')[1]).split('?')[0];
-      signinLink.text = 'Click';
+    const signInLinks = document.querySelectorAll<HTMLLinkElement>('a.primary-button--link[href*="target="]');
+    for (const signInLink of signInLinks) {
+      signInLink.href = decodeURIComponent(signInLink.href.split('target=')[1]).split('?')[0];
+      signInLink.innerText = 'Click';
     }
     const barronsAds = document.querySelectorAll('.barrons-body-ad-placement');
     removeDOMElement(...barronsAds);
@@ -456,7 +462,7 @@ if (matchDomain('elmercurio.com')) {
         const article = data.article.data.stripes[0].mainContent[0].data.description;
         const urlLoaded = data.article.data.path;
         if (!url.includes(urlLoaded)) {
-          window.location.reload(true);
+          window.location.reload();
         }
         const paywallNode = document.querySelector('.post-paywall');
         if (paywallNode) {
@@ -481,7 +487,7 @@ if (matchDomain('elmercurio.com')) {
         const styleElem = document.head.appendChild(document.createElement('style'));
         styleElem.innerHTML = '.post-paywall::after {height: auto !important;}';
       } catch (err) {
-        window.location.reload(true);
+        window.location.reload();
       }
     }
   }, 500); // Delay (in milliseconds)
@@ -525,11 +531,11 @@ if (matchDomain('elmercurio.com')) {
       }
     } else {
       const headlinePaywall = document.querySelectorAll('a.headline-paywall');
-      const amphtml = document.querySelector('link[rel="amphtml"]');
-      if (headlinePaywall.length && amphtml) {
+      const ampHtml = document.querySelector<HTMLLinkElement>('link[rel="amphtml"]');
+      if (headlinePaywall.length && ampHtml) {
         removeDOMElement(...headlinePaywall);
         window.setTimeout(function () {
-          window.location.href = amphtml.href;
+          window.location.href = ampHtml.href;
         }, 1000);
       }
     }
@@ -614,7 +620,7 @@ if (matchDomain('elmercurio.com')) {
   }, 500); // Delay (in milliseconds)
 } else if (matchDomain('adweek.com')) {
   const bodySingle = document.querySelector('body.single');
-  const ampHtml = document.querySelector('link[rel="amphtml"]');
+  const ampHtml = document.querySelector<HTMLLinkElement>('link[rel="amphtml"]');
   if (bodySingle && ampHtml) {
     bodySingle.classList.remove('single');
     window.location.href = ampHtml.href;
@@ -800,9 +806,10 @@ function waitDOMElement(selector, tagName = '', callback, multiple = false) {
   new window.MutationObserver(function (mutations) {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
-        if (!tagName || node.tagName === tagName) {
-          if (node.matches(selector)) {
-            callback(node);
+        const nodeElement = node as Element;
+        if (!tagName || nodeElement.tagName === tagName) {
+          if (nodeElement.matches(selector)) {
+            callback(nodeElement);
             if (!multiple) {
               this.disconnect();
             }

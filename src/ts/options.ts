@@ -19,12 +19,12 @@ function $$<E extends Element = Element>(sel: string, el: ParentNode = document)
 function selectPane<E extends Object & { target: any }>(e: E) {
   const panes = $$('.pane');
   for (const tab of $$('#tabs button')) {
-    tab.classList.toggle('active', tab == e.target);
+    tab.classList.toggle('active', tab === e.target);
   }
 
   for (const pane of panes) {
     if (e.target instanceof HTMLElement) {
-      pane.classList.toggle('active', pane.id == e.target?.dataset?.pane);
+      pane.classList.toggle('active', pane.id === e.target?.dataset?.pane);
     }
   }
 }
@@ -56,7 +56,7 @@ function saveOptions() {
         status.textContent = '';
 
         // Reload runtime so background script picks up changes
-        chrome.runtime.reload();
+        extensionApi.runtime.reload();
 
         window.close();
       }, 800);
@@ -103,7 +103,7 @@ function renderOptions() {
       const nItems = $$('input[data-key]').length;
       const nChecked = $$<HTMLInputElement>('input[data-key]').filter((el) => el.checked).length;
       $<HTMLInputElement>('#select-all input').checked = nChecked / nItems > 0.5;
-      $<HTMLInputElement>('#select-all input').indeterminate = nChecked && nChecked != nItems;
+      $<HTMLInputElement>('#select-all input').indeterminate = nChecked && nChecked !== nItems;
     }
   );
 }

@@ -2,7 +2,7 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './common';
+import { extensionApi, Cookie } from './common';
 import { defaultSites } from './sites';
 
 export const restrictions = {
@@ -187,7 +187,7 @@ function setDefaultOptions() {
 }
 
 // Block external scripts
-const blockedRegexes = {
+const blockedRegularExpressions = {
   'adweek.com': /.+\.lightboxcdn\.com\/.+/,
   'afr.com': /afr\.com\/assets\/vendorsReactRedux_client.+\.js/,
   'businessinsider.com': /(.+\.tinypass\.com\/.+|cdn\.onesignal\.com\/sdks\/.+\.js)/,
@@ -272,14 +272,14 @@ extensionApi.storage.sync.get(
     // Remove cookies for custom sites
     _removeCookies = removeCookies.concat(items.customSites);
 
-    if (extensionApi === chrome) {
+    if (extensionApi.isChrome) {
       initGA();
     }
   }
 );
 
 // Listen for changes to options
-extensionApi.storage.onChanged.addListener(function (changes, namespace) {
+extensionApi.storage.onChanged.addListener(function (changes /*, namespace*/) {
   if (changes.sites?.newValue) {
     const sites = changes.sites.newValue;
     enabledSites = Object.values(sites);
@@ -378,9 +378,9 @@ extensionApi.webRequest.onBeforeRequest.addListener(
 );
 
 const extraInfoSpec = ['blocking', 'requestHeaders'];
-if (Object.prototype.hasOwnProperty.call(extensionApi.webRequest.OnBeforeSendHeadersOptions, 'EXTRA_HEADERS')) {
-  extraInfoSpec.push('extraHeaders');
-}
+// if (Object.prototype.hasOwnProperty.call(extensionApi.webRequest.OnBeforeSendHeadersOptions, 'EXTRA_HEADERS')) {
+//   extraInfoSpec.push('extraHeaders');
+// }
 
 extensionApi.webRequest.onBeforeSendHeaders.addListener(
   function (details) {
@@ -395,9 +395,9 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
     }
 
     // check for blocked regular expression: domain enabled, match regex, block on an internal or external regex
-    const blockedDomains = Object.keys(blockedRegexes);
+    const blockedDomains = Object.keys(blockedRegularExpressions);
     const domain = matchUrlDomain(blockedDomains, headerReferer);
-    if (domain && details.url.match(blockedRegexes[domain]) && isSiteEnabled({ url: headerReferer })) {
+    if (domain && details.url.match(blockedRegularExpressions[domain]) && isSiteEnabled({ url: headerReferer })) {
       return { cancel: true };
     }
 
@@ -502,17 +502,18 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
         // Validate url of current tab to avoid injecting script to unrelated sites
         if (currentTab?.url && isSiteEnabled(currentTab)) {
           // run contentScript inside tab
-          extensionApi.tabs.executeScript(
-            tabId,
-            {
-              file: 'src/js/contentScript.js',
-              runAt: 'document_start',
-            },
-            function (res) {
-              if (extensionApi.runtime.lastError || res[0]) {
-              }
-            }
-          );
+          // #todo #jve Re-enable script execution after types are resolved
+          // extensionApi.tabs.executeScript(
+          //   tabId,
+          //   {
+          //     file: 'src/js/contentScript.js',
+          //     runAt: 'document_start',
+          //   },
+          //   function (/*res*/) {
+          //   // if (extensionApi.runtime.lastError || res[0]) {
+          //   // }
+          //   }
+          // );
         }
       });
     }
@@ -522,6 +523,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
   {
     urls: ['<all_urls>'],
   },
+  // @ts-ignore #todo #jve Add proper type here
   extraInfoSpec
 );
 
@@ -536,30 +538,31 @@ extensionApi.webRequest.onCompleted.addListener(
       }
     }
     if (domainToRemove) {
-      extensionApi.cookies.getAll({ domain: domainToRemove }, function (cookies) {
-        for (const ck of cookies) {
-          const cookie = {
-            url: (ck.secure ? 'https://' : 'http://') + ck.domain + ck.path,
-            name: ck.name,
-            storeId: ck.storeId,
-          };
-          // .firstPartyDomain = undefined on Chrome (doesn't support it)
-          if (ck.firstPartyDomain !== undefined) {
-            cookie.firstPartyDomain = ck.firstPartyDomain;
-          }
-          const cookieDomain = ck.domain;
-          const rcDomain = cookieDomain.replace(/^(\.?www\.|\.)/, '');
-          // hold specific cookie(s) from removeCookies domains
-          if (rcDomain in removeCookiesSelectHold && removeCookiesSelectHold[rcDomain].includes(ck.name)) {
-            continue; // don't remove specific cookie
-          }
-          // drop only specific cookie(s) from removeCookies domains
-          if (rcDomain in removeCookiesSelectDrop && !removeCookiesSelectDrop[rcDomain].includes(ck.name)) {
-            continue; // only remove specific cookie
-          }
-          extensionApi.cookies.remove(cookie);
-        }
-      });
+      // #todo #jve Reenable cookie removal
+      // extensionApi.cookies.getAll({ domain: domainToRemove }, function (cookies: Cookie[]) {
+      //   for (const ck of cookies) {
+      //     const cookie = {
+      //       url: (ck.secure ? 'https://' : 'http://') + ck.domain + ck.path,
+      //       name: ck.name,
+      //       storeId: ck.storeId,
+      //     } as Cookie;
+      //     // .firstPartyDomain = undefined on Chrome (doesn't support it)
+      //     if (ck.firstPartyDomain !== undefined) {
+      //       cookie.firstPartyDomain = ck.firstPartyDomain;
+      //     }
+      //     const cookieDomain = ck.domain;
+      //     const rcDomain = cookieDomain.replace(/^(\.?www\.|\.)/, '');
+      //     // hold specific cookie(s) from removeCookies domains
+      //     if (rcDomain in removeCookiesSelectHold && removeCookiesSelectHold[rcDomain].includes(ck.name)) {
+      //       continue; // don't remove specific cookie
+      //     }
+      //     // drop only specific cookie(s) from removeCookies domains
+      //     if (rcDomain in removeCookiesSelectDrop && !removeCookiesSelectDrop[rcDomain].includes(ck.name)) {
+      //       continue; // only remove specific cookie
+      //     }
+      //     extensionApi.cookies.remove(cookie);
+      //   }
+      // });
     }
   },
   {
@@ -587,23 +590,23 @@ extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
 
 // Google Analytics to anonymously track DAU (Chrome only)
 function initGA() {
-  (function (i, s, o, g, r, a, m) {
-    i.GoogleAnalyticsObject = r;
-    (i[r] =
-      i[r] ||
-      function () {
-        (i[r].q = i[r].q || []).push(arguments);
-      }),
-      (i[r].l = 1 * new Date());
-    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m);
-  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'UA-69824169-2', 'auto');
-  ga('set', 'checkProtocolTask', null);
-  ga('set', 'anonymizeIp', true);
-  ga('send', 'pageview');
+  // (function (i, s, o, g, r, a, m) {
+  //   i.GoogleAnalyticsObject = r;
+  //   (i[r] =
+  //     i[r] ||
+  //     function () {
+  //       (i[r].q = i[r].q || []).push(arguments);
+  //     }),
+  //     (i[r].l = 1 * new Date());
+  //   (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+  //   a.async = 1;
+  //   a.src = g;
+  //   m.parentNode.insertBefore(a, m);
+  // })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  // ga('create', 'UA-69824169-2', 'auto');
+  // ga('set', 'checkProtocolTask', null);
+  // ga('set', 'anonymizeIp', true);
+  // ga('send', 'pageview');
 }
 
 function isSiteEnabled(details) {
@@ -614,23 +617,26 @@ function isSiteEnabled(details) {
   return !!enabledSite;
 }
 
-function matchDomain(domains, hostname) {
-  let matchedDomain = false;
+function matchDomain(domains: string | Array<string>, hostname?: string): string | null {
   if (!hostname) {
     hostname = window.location.hostname;
   }
   if (typeof domains === 'string') {
     domains = [domains];
   }
-  domains.some((domain) => (hostname === domain || hostname.endsWith('.' + domain)) && (matchedDomain = domain));
-  return matchedDomain;
+  for (const domain of domains) {
+    if (hostname === domain || hostname.endsWith('.' + domain)) {
+      return domain;
+    }
+  }
+  return null;
 }
 
-function matchUrlDomain(domains, url) {
+function matchUrlDomain(domains: string | Array<string>, url: string) {
   return matchDomain(domains, urlHost(url));
 }
 
-function urlHost(url) {
+function urlHost(url?: string): string | undefined {
   if (url?.startsWith('http')) {
     try {
       return new URL(url).hostname;
