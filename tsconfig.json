@@ -10,5 +10,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-  }
+  },
+  "include": [
+    "./*.js",
+    "./src/**/*.js"
+  ]
 }

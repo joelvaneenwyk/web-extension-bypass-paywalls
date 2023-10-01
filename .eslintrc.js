@@ -1,3 +1,9 @@
+/**
+ * ESLint configuration for Bypass Paywalls browser extension.
+ *
+ * @see https://eslint.org/docs/user-guide/configuring
+ * @type {import("eslint").Linter.Config}
+ */
 module.exports = {
     "env": {
         "browser": true,
