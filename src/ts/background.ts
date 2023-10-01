@@ -2,7 +2,10 @@
  * Bypass Paywalls
  */
 
-const restrictions = {
+import { extensionApi } from './common';
+import { defaultSites } from './sites';
+
+export const restrictions = {
   'adweek.com': /^((?!\.adweek\.com\/(.+\/)?(amp|agencyspy|tvnewser|tvspy)\/).)*$/,
   'barrons.com': /.+\.barrons\.com\/(amp\/)?article(s)?\/.+/,
   'economist.com': /.+economist\.com\/.+\/\d{1,4}\/\d{1,2}\/\d{2}\/.+/,
@@ -15,7 +18,7 @@ const restrictions = {
 };
 
 // Don't remove cookies before page load
-const allowCookies = [
+export const allowCookies = [
   'brisbanetimes.com.au',
   'canberratimes.com.au',
   'cen.acs.org',
@@ -76,7 +79,7 @@ const allowCookies = [
 ];
 
 // Removes cookies after page load
-const removeCookies = [
+export const removeCookies = [
   'bloomberg.com',
   'bloombergquint.com',
   'brisbanetimes.com.au',
@@ -121,14 +124,14 @@ const removeCookies = [
 let _removeCookies = removeCookies;
 
 // select specific cookie(s) to hold from removeCookies domains
-const removeCookiesSelectHold = {
+export const removeCookiesSelectHold = {
   'qz.com': ['gdpr'],
   'wsj.com': ['wsjregion'],
   'seattletimes.com': ['st_newsletter_splash_seen']
 };
 
 // select only specific cookie(s) to drop from removeCookies domains
-const removeCookiesSelectDrop = {
+export const removeCookiesSelectDrop = {
   'ambito.com': ['TDNotesRead'],
   'demorgen.be': ['TID_ID'],
   'fd.nl': ['socialread'],
@@ -138,7 +141,7 @@ const removeCookiesSelectDrop = {
 };
 
 // Override User-Agent with Googlebot
-const useGoogleBotSites = [
+export const useGoogleBotSites = [
   'adelaidenow.com.au',
   'barrons.com',
   'couriermail.com.au',
@@ -176,7 +179,7 @@ const useMsnBot = [
 // Contains google bot sites above plus any custom sites
 let _useGoogleBotSites = useGoogleBotSites;
 
-function setDefaultOptions () {
+function setDefaultOptions() {
   extensionApi.storage.sync.set({
     sites: defaultSites
   }, function () {
@@ -290,14 +293,14 @@ extensionApi.tabs.onActivated.addListener(function (activeInfo) {
   extensionApi.tabs.get(activeInfo.tabId, updateBadge);
 });
 
-function updateBadge (activeTab) {
+function updateBadge(activeTab) {
   if (extensionApi.runtime.lastError || !activeTab) { return; }
   const badgeText = getBadgeText(activeTab.url);
   extensionApi.browserAction.setBadgeBackgroundColor({ color: 'blue' });
   extensionApi.browserAction.setBadgeText({ text: badgeText });
 }
 
-function getBadgeText (currentUrl) {
+function getBadgeText(currentUrl) {
   return currentUrl && isSiteEnabled({ url: currentUrl }) ? 'ON' : '';
 }
 
@@ -309,8 +312,8 @@ extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
   const updatedUrl = decodeURIComponent(details.url.split('&dest=')[1].split('&')[0]).replace('www.', 'amp.');
   return { redirectUrl: updatedUrl };
 },
-{ urls: ['*://www.dailytelegraph.com.au/subscribe/*'], types: ['main_frame'] },
-['blocking']
+  { urls: ['*://www.dailytelegraph.com.au/subscribe/*'], types: ['main_frame'] },
+  ['blocking']
 );
 
 // nytimes.com
@@ -329,7 +332,7 @@ extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
 }, {
   urls: ['*://*.nytimes.com/*']
 },
-['blocking', 'responseHeaders']);
+  ['blocking', 'responseHeaders']);
 
 // Disable javascript for these sites
 extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
@@ -339,18 +342,18 @@ extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
   }
   return { cancel: true };
 },
-{
-  urls: [
-    '*://*.newstatesman.com/*',
-    '*://*.outbrain.com/*',
-    '*://*.piano.io/*',
-    '*://*.poool.fr/*',
-    '*://*.qiota.com/*',
-    '*://*.tinypass.com/*'
-  ],
-  types: ['script']
-},
-['blocking']
+  {
+    urls: [
+      '*://*.newstatesman.com/*',
+      '*://*.outbrain.com/*',
+      '*://*.piano.io/*',
+      '*://*.poool.fr/*',
+      '*://*.qiota.com/*',
+      '*://*.tinypass.com/*'
+    ],
+    types: ['script']
+  },
+  ['blocking']
 );
 
 const extraInfoSpec = ['blocking', 'requestHeaders'];
@@ -552,7 +555,7 @@ extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
 ['blocking', 'responseHeaders']);
 
 // Google Analytics to anonymously track DAU (Chrome only)
-function initGA () {
+function initGA() {
   (function (i, s, o, g, r, a, m) {
     i.GoogleAnalyticsObject = r;
     i[r] = i[r] || function () {
@@ -569,7 +572,7 @@ function initGA () {
   ga('send', 'pageview');
 }
 
-function isSiteEnabled (details) {
+function isSiteEnabled(details) {
   const enabledSite = matchUrlDomain(enabledSites, details.url);
   if (enabledSite in restrictions) {
     return restrictions[enabledSite].test(details.url);
@@ -577,11 +580,7 @@ function isSiteEnabled (details) {
   return !!enabledSite;
 }
 
-function matchUrlDomain (domains, url) {
-  return matchDomain(domains, urlHost(url));
-}
-
-function matchDomain (domains, hostname) {
+function matchDomain(domains, hostname) {
   let matchedDomain = false;
   if (!hostname) { hostname = window.location.hostname; }
   if (typeof domains === 'string') { domains = [domains]; }
@@ -589,7 +588,11 @@ function matchDomain (domains, hostname) {
   return matchedDomain;
 }
 
-function urlHost (url) {
+function matchUrlDomain(domains, url) {
+  return matchDomain(domains, urlHost(url));
+}
+
+function urlHost(url) {
   if (url?.startsWith('http')) {
     try {
       return new URL(url).hostname;

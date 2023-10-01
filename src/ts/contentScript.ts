@@ -46,7 +46,7 @@ if (matchDomain('elmercurio.com')) {
   if (window.location.href.startsWith('https://www.telegraaf.nl/error?ref=/')) {
     window.location.href = window.location.href.split('&')[0].replace('error?ref=/', '');
   }
-  const articleWrapper = document.querySelector('.ArticlePageWrapper__uid');
+  const articleWrapper = document.querySelector<HTMLElement>('.ArticlePageWrapper__uid');
   const spotXBanner = document.querySelector('.ArticleBodyBlocks__inlineArticleSpotXBanner');
   const paywall = document.querySelector('.PopupBackdrop__block');
   removeDOMElement(spotXBanner, paywall);
@@ -56,7 +56,7 @@ if (matchDomain('elmercurio.com')) {
   if (premium && !articleBodyDone) {
     const articleBodyOld = document.querySelector('[id^=articleBody]');
     removeDOMElement(articleBodyOld);
-    const json = document.querySelector('script[type="application/ld+json"][data-react-helmet="true"]');
+    const json = document.querySelector<HTMLElement & { text: string }>('script[type="application/ld+json"][data-react-helmet="true"]');
     if (json) {
       const jsonText = JSON.parse(json.text).articleBody;
       const articleBody = document.querySelector('section.TextArticlePage__bodyText');
@@ -83,19 +83,19 @@ if (matchDomain('elmercurio.com')) {
   const softwall = document.querySelector('[id^="softwall"]');
   removeDOMElement(leaderboard, softwall, ...adverts);
   if (window.location.href.includes('/gdpr-consent/')) {
-    const freeButton = document.querySelector('.gdpr-consent-container .continue-btn.button.free');
+    const freeButton = document.querySelector<HTMLButtonElement>('.gdpr-consent-container .continue-btn.button.free');
     if (freeButton) { freeButton.click(); }
     window.setTimeout(function () {
-      const gdprcheckbox = document.querySelector('.gdpr-consent-container .consent-page:not(.hide) #agree');
-      if (gdprcheckbox) {
-        gdprcheckbox.checked = true;
-        gdprcheckbox.dispatchEvent(new Event('change'));
-        document.querySelector('.gdpr-consent-container .consent-page:not(.hide) .continue-btn.button.accept-consent').click();
+      const gdprCheckbox = document.querySelector<HTMLInputElement>('.gdpr-consent-container .consent-page:not(.hide) #agree');
+      if (gdprCheckbox) {
+        gdprCheckbox.checked = true;
+        gdprCheckbox.dispatchEvent(new Event('change'));
+        document.querySelector<HTMLButtonElement>('.gdpr-consent-container .consent-page:not(.hide) .continue-btn.button.accept-consent').click();
       }
     }, 300); // Delay (in milliseconds)
   } else {
     const url = window.location.href;
-    function main (element) {
+    function main(element) {
       removeDOMElement(element);
       window.location.href = url.split('?')[0] + '?outputType=amp';
     }
@@ -108,7 +108,7 @@ if (matchDomain('elmercurio.com')) {
   }
 } else if (matchDomain('wsj.com') && !matchDomain('cn.wsj.com')) {
   if (window.location.href.includes('/articles/')) {
-    const closeButton = document.querySelector('div.close-btn[role="button"]');
+    const closeButton = document.querySelector<HTMLButtonElement>('div.close-btn[role="button"]');
     if (closeButton) { closeButton.click(); }
   }
   document.addEventListener('DOMContentLoaded', () => {
@@ -124,7 +124,7 @@ if (matchDomain('elmercurio.com')) {
     }
   });
 } else if (matchDomain('sloanreview.mit.edu')) {
-  const readMore = document.querySelector('.btn-read-more');
+  const readMore = document.querySelector<HTMLButtonElement>('.btn-read-more');
   if (readMore) {
     readMore.click();
   }
@@ -690,7 +690,7 @@ if (matchDomain('elmercurio.com')) {
             body.removeAttribute('style');
             body.removeAttribute('overflow');
             const blur = document.querySelector('#natgeo-template1-frame-1-module-1 > div > div > section > article > section > div.Article__Content__Overlay--gated');
-            if (blur) removeDOMElement(blur);
+            if (blur) { removeDOMElement(blur); }
 
             this.disconnect(); // Stop watching for element being added after one removal
           }
@@ -722,13 +722,13 @@ if (matchDomain('elmercurio.com')) {
   }
 }
 
-function matchDomain (domains) {
+function matchDomain(domains) {
   const hostname = window.location.hostname;
   if (typeof domains === 'string') { domains = [domains]; }
   return domains.some(domain => hostname === domain || hostname.endsWith('.' + domain));
 }
 
-function waitDOMElement (selector, tagName = '', callback, multiple = false) {
+function waitDOMElement(selector, tagName = '', callback, multiple = false) {
   new window.MutationObserver(function (mutations) {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
@@ -746,13 +746,13 @@ function waitDOMElement (selector, tagName = '', callback, multiple = false) {
   });
 }
 
-function removeDOMElement (...elements) {
+function removeDOMElement(...elements) {
   for (const element of elements) {
     if (element) { element.remove(); }
   }
 }
 
-function removeClassesByPrefix (el, prefix) {
+function removeClassesByPrefix(el, prefix) {
   for (const clazz of el.classList) {
     if (clazz.startsWith(prefix)) {
       el.classList.remove(clazz);
@@ -761,7 +761,7 @@ function removeClassesByPrefix (el, prefix) {
 }
 
 // Prevent element from being added the first time to the DOM
-function blockElement (selector, blockAlways = false) {
+function blockElement(selector, blockAlways = false) {
   new window.MutationObserver(function (mutations) {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
@@ -778,7 +778,7 @@ function blockElement (selector, blockAlways = false) {
   }).observe(document, { subtree: true, childList: true });
 }
 
-function ampUnhideSubscriptionsSection (ampAdsSel = 'amp-ad, .ad') {
+function ampUnhideSubscriptionsSection(ampAdsSel = 'amp-ad, .ad') {
   const preview = document.querySelector('[subscriptions-section="content-not-granted"]');
   removeDOMElement(preview);
   const subscriptionsSection = document.querySelectorAll('[subscriptions-section="content"]');
