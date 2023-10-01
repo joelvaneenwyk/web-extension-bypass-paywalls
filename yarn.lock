@@ -313,7 +313,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/type-utils@npm:6.7.3":
+"@typescript-eslint/type-utils@npm:6.7.3, @typescript-eslint/type-utils@npm:^6.0.0":
   version: 6.7.3
   resolution: "@typescript-eslint/type-utils@npm:6.7.3"
   dependencies:
@@ -355,7 +355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:6.7.3":
+"@typescript-eslint/utils@npm:6.7.3, @typescript-eslint/utils@npm:^6.2.0":
   version: 6.7.3
   resolution: "@typescript-eslint/utils@npm:6.7.3"
   dependencies:
@@ -674,6 +674,7 @@ __metadata:
     "@yarnpkg/sdks": ^3.0.0-rc.52
     eslint: ^8.50.0
     eslint-config-standard-with-typescript: latest
+    eslint-plugin-functional: ^6.0.0
     eslint-plugin-import: ^2.28.1
     eslint-plugin-n: ^16.1.0
     eslint-plugin-promise: ^6.1.1
@@ -878,6 +879,13 @@ __metadata:
   version: 0.1.4
   resolution: "deep-is@npm:0.1.4"
   checksum: edb65dd0d7d1b9c40b2f50219aef30e116cedd6fc79290e740972c132c09106d2e80aa0bc8826673dd5a00222d4179c84b36a790eef63a4c4bca75a37ef90804
+  languageName: node
+  linkType: hard
+
+"deepmerge-ts@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "deepmerge-ts@npm:5.1.0"
+  checksum: 6b57db93c2985e4a35f24b2451db31715050d143988b7d6346f4049c9aec21a6c289514b88d3ee3d6e0697e72ef5d96ff0bbb7cb75422d56fee55ee85c7168e7
   languageName: node
   linkType: hard
 
@@ -1106,6 +1114,26 @@ __metadata:
   peerDependencies:
     eslint: ">=8"
   checksum: eece76ef6bcfce463659338b487e516e962ddf3ae34a8a65240ebd318fc991cabfe3573b1c3af5226474193b9c83f030c7900a8e5ffdbe731a3928ca8f2799c9
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-functional@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "eslint-plugin-functional@npm:6.0.0"
+  dependencies:
+    "@typescript-eslint/utils": ^6.2.0
+    deepmerge-ts: ^5.1.0
+    escape-string-regexp: ^4.0.0
+    is-immutable-type: ^2.0.1
+    semver: ^7.5.4
+    ts-api-utils: ^1.0.1
+  peerDependencies:
+    eslint: ^8.0.0
+    typescript: ">=4.3.5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 7ca25c2d0f1d19530886cdcc73299d16066135bb4d5fdece81064ebb896b2c90cada06f831e264718d23904602f32c7eb64f305821578038c2fb5385f6094a1a
   languageName: node
   linkType: hard
 
@@ -1766,6 +1794,19 @@ __metadata:
   dependencies:
     is-extglob: ^2.1.1
   checksum: d381c1319fcb69d341cc6e6c7cd588e17cd94722d9a32dbd60660b993c4fb7d0f19438674e68dfec686d09b7c73139c9166b47597f846af387450224a8101ab4
+  languageName: node
+  linkType: hard
+
+"is-immutable-type@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "is-immutable-type@npm:2.0.1"
+  dependencies:
+    "@typescript-eslint/type-utils": ^6.0.0
+    ts-api-utils: ^1.0.1
+  peerDependencies:
+    eslint: "*"
+    typescript: ">=4.7.4"
+  checksum: 8f99323021b9ff0123a5a361b632e40f777776b281d82f8251a22e95ffcca5cffc1639ee9cf5e891698a69b1c3a24a6fc9aee5c44700a501de31784e805d98b5
   languageName: node
   linkType: hard
 
