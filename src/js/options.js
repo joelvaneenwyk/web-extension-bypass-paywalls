@@ -97,7 +97,7 @@ function renderOptions () {
 function selectAll () {
   for (const el of $$('input[data-key]')) {
     el.checked = this.checked;
-  };
+  }
 }
 
 // Initialize UI
