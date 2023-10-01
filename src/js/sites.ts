@@ -1,3 +1,7 @@
+/**
+ * Bypass Paywalls
+ */
+
 // Cookies from this list are blocked by default
 const defaultSites = {
   Adweek: 'adweek.com',

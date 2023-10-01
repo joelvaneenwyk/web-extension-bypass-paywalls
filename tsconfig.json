@@ -9,7 +9,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "sourceMap": true,
     "noEmitOnError": true,
     "outDir": "dist/js",

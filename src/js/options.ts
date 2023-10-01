@@ -1,22 +1,28 @@
+/**
+ * Bypass Paywalls
+ */
+
 // Shortcut for document.querySelector()
-function $(sel, el = document) {
+function $(sel: string, el: ParentNode): Element | null {
   return el.querySelector(sel);
 }
 
 // Shortcut for document.querySelectorAll()
-function $$(sel, el = document) {
+function $$(sel: string, el: ParentNode = document) {
   return Array.from(el.querySelectorAll(sel));
 }
 
 // Select UI pane
-function selectPane(e) {
+function selectPane(e: Event) {
   const panes = $$('.pane');
   for (const tab of $$('#tabs button')) {
     tab.classList.toggle('active', tab == e.target);
   }
 
   for (const pane of panes) {
-    pane.classList.toggle('active', pane.id == e.target.dataset.pane);
+    if (e.target instanceof HTMLElement) {
+      pane.classList.toggle('active', pane.id == e.target?.dataset?.pane);
+    }
   }
 }
 
