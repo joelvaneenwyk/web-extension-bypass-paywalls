@@ -10,36 +10,20 @@ import js from "@eslint/js";
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import pluginFunctional from 'eslint-plugin-functional';
-import pluginImport from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
+import pluginImport from 'eslint-plugin-import';
+import prettierConfig from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
 
 /** @type { import("eslint").Linter.FlatConfig[] } */
 export default [
   js.configs.recommended,
+  // prettierConfig,
+  // prettierPlugin.configs.recommended,
   {
-    files: ["src/ts/*.ts"],
-    languageOptions: {
-      parserOptions: {
-        sourceType: "module"
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.es6,
-        ...globals.commonjs
-      }
-    },
-  },
-  {
-    files: ["*.js"],
-    rules: {
-      "no-undef": "warn",
-      "no-console": "warn"
-    }
-  },
-  {
-    files: ["**/*.ts"],
+    files: ["**/*.{js,ts}"],
     plugins: {
-      "@typescript-eslint": typescriptPlugin
+      "@typescript-eslint": typescriptPlugin,
+      "prettier": prettierPlugin,
     },
     settings: {
     },
@@ -58,14 +42,17 @@ export default [
       }
     },
     rules: {
+      "prettier/prettier": "error",
+      "arrow-body-style": "off",
+      "prefer-arrow-callback": "off",
       "semi": "off",
-      "@typescript-eslint/semi": "error",
+      "@typescript-eslint/semi": "off",
       "no-extra-semi": "warn",
       "curly": "warn",
-      "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+      "quotes": "off",
       "eqeqeq": "error",
       "indent": "off",
-      "@typescript-eslint/indent": ["warn", "tab", { "SwitchCase": 1 }],
+      "@typescript-eslint/indent": "off",
       "@typescript-eslint/no-floating-promises": "error"
     }
   }
