@@ -1,7 +1,27 @@
 {
+  "name": "browser-extension-bypass-paywalls",
   "author": "imadamdev",
+  "description": "Bypass News Sites' Paywalls",
+  "license": "MIT",
+  "main": "src/js/common.js",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.6.3",
   "bugs": {
     "url": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls/issues"
+  },
+  "homepage": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls#readme",
+  "keywords": [
+    "extension",
+    "paywalls"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls.git"
+  },
+  "scripts": {
+    "lint": "yarn eslint \"./src/**/*.ts\"",
+    "lint:fix": "yarn prettier --write \"./src/**/*.ts\" && yarn eslint \"./src/**/*.ts\" --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@eslint/js": "^8.50.0",
@@ -23,26 +43,5 @@
     "globals": "^13.22.0",
     "prettier": "^3.0.3",
     "typescript": "*"
-  },
-  "description": "Bypass News Sites' Paywalls",
-  "homepage": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls#readme",
-  "keywords": [
-    "extension",
-    "paywalls"
-  ],
-  "license": "MIT",
-  "main": "src/js/common.js",
-  "name": "browser-extension-bypass-paywalls",
-  "packageManager": "yarn@3.6.3",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls.git"
-  },
-  "scripts": {
-    "lint": "yarn eslint \"./src/**/*.ts\"",
-    "lint:fix": "yarn prettier --write \"./src/**/*.ts\" && yarn eslint \"./src/**/*.ts\" --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "type": "module",
-  "version": "1.0.0"
+  }
 }

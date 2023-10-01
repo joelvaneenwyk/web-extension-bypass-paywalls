@@ -2,8 +2,8 @@
  * Bypass Paywalls
  */
 
-import { extensionApi, Cookie } from './common';
-import { defaultSites } from './sites';
+import { extensionApi } from './shared/common';
+import { defaultSites } from './shared/sites';
 
 export const restrictions = {
   'adweek.com': /^((?!\.adweek\.com\/(.+\/)?(amp|agencyspy|tvnewser|tvspy)\/).)*$/,
@@ -175,8 +175,8 @@ const useMsnBot = ['haaretz.co.il', 'haaretz.com', 'themarker.com'];
 // Contains google bot sites above plus any custom sites
 let _useGoogleBotSites = useGoogleBotSites;
 
-function setDefaultOptions() {
-  extensionApi.storage.sync.set(
+async function setDefaultOptions() {
+  await extensionApi.storage.sync.set(
     {
       sites: defaultSites,
     },
@@ -247,13 +247,13 @@ const blockedRegularExpressions = {
   'bloomberg.com': /(\.cm\.bloomberg\.com\/|assets\.bwbx\.io\/s\d\/javelin\/.+\/transporter\/)/
 };
 
-const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +https://www.google.com/bot.html)';
 const userAgentMobile =
-  'Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible ; Googlebot/2.1 ; +http://www.google.com/bot.html)';
-const userAgentDesktopBingBot = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+  'Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible ; Googlebot/2.1 ; +https://www.google.com/bot.html)';
+const userAgentDesktopBingBot = 'Mozilla/5.0 (compatible; bingbot/2.0; +https://www.bing.com/bingbot.htm)';
 const userAgentMobileBingBot =
-  'Chrome/80.0.3987.92 Mobile Safari/537.36 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
-const userAgentMsnBot = 'msnbot/2.0b (+http://search.msn.com/msnbot.htm)';
+  'Chrome/80.0.3987.92 Mobile Safari/537.36 (compatible; bingbot/2.0; +https://www.bing.com/bingbot.htm)';
+const userAgentMsnBot = 'msnbot/2.0b (+https://search.msn.com/msnbot.htm)';
 
 let enabledSites = [];
 

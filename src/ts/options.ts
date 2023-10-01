@@ -2,21 +2,22 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './common';
-import { defaultSites } from './sites';
+import { extensionApi } from './shared/common';
+import { defaultSites } from './shared/sites';
+import { setVersion } from './shared/version';
 
 // Shortcut for document.querySelector()
-function $<E extends Element = Element>(sel: string, el: ParentNode = document): E | null {
+export function $<E extends Element = Element>(sel: string, el: ParentNode = document): E | null {
   return el.querySelector<E>(sel);
 }
 
 // Shortcut for document.querySelectorAll()
-function $$<E extends Element = Element>(sel: string, el: ParentNode = document): Array<E> {
+export function $$<E extends Element = Element>(sel: string, el: ParentNode = document): Array<E> {
   return Array.from(el.querySelectorAll<E>(sel));
 }
 
 // Select UI pane
-function selectPane<E extends Object & { target: any }>(e: E) {
+export function selectPane<E extends Object & { target: any }>(e: E) {
   const panes = $$('.pane');
   for (const tab of $$('#tabs button')) {
     tab.classList.toggle('active', tab === e.target);
@@ -30,7 +31,7 @@ function selectPane<E extends Object & { target: any }>(e: E) {
 }
 
 // Saves options to extensionApi.storage
-function saveOptions() {
+export function saveOptions() {
   const sites = $$<HTMLInputElement>('#bypass_sites input').reduce(function (memo, inputEl) {
     if (inputEl.checked) {
       memo[inputEl.dataset.key] = inputEl.dataset.value;
@@ -66,7 +67,7 @@ function saveOptions() {
 
 // Restores checkbox input states using the preferences
 // stored in extensionApi.storage.
-function renderOptions() {
+export function renderOptions() {
   extensionApi.storage.sync.get(
     {
       sites: {},
@@ -109,14 +110,16 @@ function renderOptions() {
 }
 
 // Select/deselect all supported sites
-function selectAll() {
+export function selectAll() {
   for (const el of $$<HTMLInputElement>('input[data-key]')) {
     el.checked = this.checked;
   }
 }
 
 // Initialize UI
-function init() {
+export function init() {
+  setVersion();
+
   renderOptions();
 
   $('#save').addEventListener('click', saveOptions);

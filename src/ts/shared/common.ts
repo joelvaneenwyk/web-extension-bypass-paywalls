@@ -2,8 +2,9 @@
  * Bypass Paywalls
  */
 
-export type ArrayElement<ArrayType extends readonly unknown[]> =
-  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+export type ArrayElement<ArrayType extends readonly unknown[]> = ArrayType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never;
 
 export type Browser = typeof browser | typeof chrome;
 export type Runtime = typeof browser.runtime | typeof chrome.runtime;
@@ -14,13 +15,12 @@ export type BrowserAction = typeof browser.browserAction | typeof chrome.browser
 export type WebRequest = typeof browser.webRequest | typeof chrome.webRequest;
 export type HttpHeader = ArrayElement<browser.webRequest.HttpHeaders> | ArrayElement<chrome.webRequest.HttpHeader[]>;
 
-
 export interface Cookie {
-  url: string,
-  name: string,
-  storeId: string,
-  firstPartyDomain?: string
-};
+  url: string;
+  name: string;
+  storeId: string;
+  firstPartyDomain?: string;
+}
 
 export interface OnBeforeSendHeadersDetails {
   /**
