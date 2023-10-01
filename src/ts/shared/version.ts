@@ -7,8 +7,12 @@
 
 import { extensionApi } from './common';
 
-if (extensionApi !== undefined) {
-  const manifestData = extensionApi.runtime.getManifest();
+export function setVersion() {
+  const manifestData = extensionApi !== undefined
+    ? extensionApi.runtime.getManifest()
+    : {
+      version: '0.0.0'
+    };
   const versionString = 'v' + manifestData.version;
   const versionElement = document.getElementById('version');
   if (versionElement !== null) {

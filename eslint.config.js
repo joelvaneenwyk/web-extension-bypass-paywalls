@@ -29,6 +29,7 @@ export default [
     },
     languageOptions: {
       globals: {
+        ...globals.webextensions,
         ...globals.browser,
         ...globals.node,
         ...globals.es6,

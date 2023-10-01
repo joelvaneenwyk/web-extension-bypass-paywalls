@@ -2,15 +2,11 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    /* Modules */
-    "module": "commonjs",
-    "moduleDetection": "force",
+    "module": "ES2015",
     "noEmitOnError": true,
     "outDir": "src/js",
     "sourceMap": true,
     "strict": false,
-    /* Visit https://aka.ms/tsconfig to read more about this file */
-    /* Language and Environment */
     "target": "es2016"
   },
   "include": [
