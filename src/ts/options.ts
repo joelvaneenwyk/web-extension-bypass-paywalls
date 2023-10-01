@@ -2,18 +2,21 @@
  * Bypass Paywalls
  */
 
+import { extensionApi } from './common';
+import { defaultSites } from './sites';
+
 // Shortcut for document.querySelector()
-function $(sel: string, el: ParentNode): Element | null {
-  return el.querySelector(sel);
+function $<E extends Element = Element>(sel: string, el: ParentNode = document): E | null {
+  return el.querySelector<E>(sel);
 }
 
 // Shortcut for document.querySelectorAll()
-function $$(sel: string, el: ParentNode = document) {
-  return Array.from(el.querySelectorAll(sel));
+function $$<E extends Element = Element>(sel: string, el: ParentNode = document): Array<E> {
+  return Array.from(el.querySelectorAll<E>(sel));
 }
 
 // Select UI pane
-function selectPane(e: Event) {
+function selectPane<E extends Object & { target: any }>(e: E) {
   const panes = $$('.pane');
   for (const tab of $$('#tabs button')) {
     tab.classList.toggle('active', tab == e.target);
@@ -28,14 +31,14 @@ function selectPane(e: Event) {
 
 // Saves options to extensionApi.storage
 function saveOptions() {
-  const sites = $$('#bypass_sites input').reduce(function (memo, inputEl) {
+  const sites = $$<HTMLInputElement>('#bypass_sites input').reduce(function (memo, inputEl) {
     if (inputEl.checked) {
       memo[inputEl.dataset.key] = inputEl.dataset.value;
     }
     return memo;
   }, {});
 
-  const customSites = $('#custom_sites').value
+  const customSites = $<HTMLInputElement>('#custom_sites').value
     .split('\n')
     .map(s => s.trim())
     .filter(s => s);
@@ -60,7 +63,7 @@ function saveOptions() {
 
 // Restores checkbox input states using the preferences
 // stored in extensionApi.storage.
-function renderOptions () {
+function renderOptions() {
   extensionApi.storage.sync.get({
     sites: {},
     customSites: []
@@ -87,21 +90,21 @@ function renderOptions () {
 
     // Render custom sites
     const customSites = items.customSites;
-    $('#custom_sites').value = customSites.join('\n');
+    $<HTMLInputElement>('#custom_sites').value = customSites.join('\n');
 
     // Set select all/none checkbox state.  Note: "indeterminate" checkboxes
     // require `chrome_style: false` be set in manifest.json.  See
     // https://bugs.chromium.org/p/chromium/issues/detail?id=1097489
     const nItems = $$('input[data-key]').length;
-    const nChecked = $$('input[data-key]').filter(el => el.checked).length;
-    $('#select-all input').checked = nChecked / nItems > 0.5;
-    $('#select-all input').indeterminate = nChecked && nChecked != nItems;
+    const nChecked = $$<HTMLInputElement>('input[data-key]').filter(el => el.checked).length;
+    $<HTMLInputElement>('#select-all input').checked = nChecked / nItems > 0.5;
+    $<HTMLInputElement>('#select-all input').indeterminate = nChecked && nChecked != nItems;
   });
 }
 
 // Select/deselect all supported sites
-function selectAll () {
-  for (const el of $$('input[data-key]')) {
+function selectAll() {
+  for (const el of $$<HTMLInputElement>('input[data-key]')) {
     el.checked = this.checked;
   }
 }
@@ -119,7 +122,7 @@ function init() {
 
   selectPane({ target: $('#tabs button:first-child') });
 
-  if (extensionApi === chrome) {
+  if (extensionApi.isChrome) {
     document.body.classList.add('customSitesEnabled');
   }
 }

@@ -7,19 +7,16 @@
 import globals from "globals";
 
 import js from "@eslint/js";
-import pluginTypescript from '@typescript-eslint/eslint-plugin';
-import parserTypescript from '@typescript-eslint/parser';
+import typescriptPlugin from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
 import pluginFunctional from 'eslint-plugin-functional';
 import pluginImport from 'eslint-plugin-import'; // 'import' is ambiguous & prettier has trouble
-const globals = require('globals');
-const typescriptParser = require('@typescript-eslint/parser');
-const typescriptPlugin = require('@typescript-eslint/eslint-plugin');
 
 /** @type { import("eslint").Linter.FlatConfig[] } */
 export default [
-  "eslint:recommended",
+  js.configs.recommended,
   {
-    files: ["**/*.js"],
+    files: ["src/ts/*.ts"],
     languageOptions: {
       parserOptions: {
         sourceType: "module"
@@ -33,17 +30,18 @@ export default [
     },
   },
   {
-    files: ["sub/*.js"],
+    files: ["*.js"],
     rules: {
       "no-undef": "warn",
       "no-console": "warn"
     }
   },
   {
-    output: "dist",
-    files: ["*.ts", "**/*.ts"],
+    files: ["**/*.ts"],
     plugins: {
       "@typescript-eslint": typescriptPlugin
+    },
+    settings: {
     },
     languageOptions: {
       globals: {

@@ -3,7 +3,7 @@
  */
 
 // Cookies from this list are blocked by default
-const defaultSites = {
+export const defaultSites = {
   Adweek: 'adweek.com',
   Ámbito: 'ambito.com',
   'American Banker': 'americanbanker.com',

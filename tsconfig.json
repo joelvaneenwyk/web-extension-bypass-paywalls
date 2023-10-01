@@ -1,21 +1,19 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig to read more about this file */
-
-    /* Language and Environment */
-    "target": "es2016",
-
-    /* Modules */
-    "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
-    "sourceMap": true,
+    /* Modules */
+    "module": "commonjs",
+    "moduleDetection": "force",
     "noEmitOnError": true,
-    "outDir": "dist/js",
+    "outDir": "src/js",
+    "sourceMap": true,
+    "strict": false,
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    /* Language and Environment */
+    "target": "es2016"
   },
   "include": [
-    "./*.js",
-    "./src/**/*.ts"
+    "./src/ts/*.ts"
   ]
 }
