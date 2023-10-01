@@ -266,7 +266,7 @@ extensionApi.storage.sync.get({
 
 // Listen for changes to options
 extensionApi.storage.onChanged.addListener(function (changes, namespace) {
-  if (changes.sites && changes.sites.newValue) {
+  if (changes.sites?.newValue) {
     const sites = changes.sites.newValue;
     enabledSites = Object.values(sites);
   }
@@ -473,7 +473,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(function (details) {
   if (tabId !== -1) {
     extensionApi.tabs.get(tabId, function (currentTab) {
       // Validate url of current tab to avoid injecting script to unrelated sites
-      if (currentTab && currentTab.url && isSiteEnabled(currentTab)) {
+      if (currentTab?.url && isSiteEnabled(currentTab)) {
         // run contentScript inside tab
         extensionApi.tabs.executeScript(tabId, {
           file: 'src/js/contentScript.js',
@@ -487,7 +487,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(function (details) {
     });
   }
 
-  return { requestHeaders: requestHeaders };
+  return { requestHeaders };
 }, {
   urls: ['<all_urls>']
 }, extraInfoSpec);
@@ -588,7 +588,7 @@ function matchDomain (domains, hostname) {
 }
 
 function urlHost (url) {
-  if (url && url.startsWith('http')) {
+  if (url?.startsWith('http')) {
     try {
       return new URL(url).hostname;
     } catch (e) {

@@ -143,10 +143,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chrome@npm:^0.0.246":
+  version: 0.0.246
+  resolution: "@types/chrome@npm:0.0.246"
+  dependencies:
+    "@types/filesystem": "*"
+    "@types/har-format": "*"
+  checksum: 6c6d92814b9838bbb1034d0cf731e53f8bb0090dc3e4a248c0e7c4c087fba305702ebf61b80858fec60f52858cb9ecf8148dbe9e94a20d742661085f31ee9cc7
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.39.6":
   version: 1.39.8
   resolution: "@types/emscripten@npm:1.39.8"
   checksum: adccdfcec3a9829aaeee580259d21653ef15ae638b88c2e310d1d4184cfc83809b463fabdd0050e018c7b6b966166d973d71f3d59601644947d0235e98b77e64
+  languageName: node
+  linkType: hard
+
+"@types/filesystem@npm:*":
+  version: 0.0.33
+  resolution: "@types/filesystem@npm:0.0.33"
+  dependencies:
+    "@types/filewriter": "*"
+  checksum: 49fc883317beef658d463994117676c0f494743c17d9d191e4c7c9764000490f7c657218b4a5427a076e399086cf6e2aa30e70fc6787a29646339813eb921a43
+  languageName: node
+  linkType: hard
+
+"@types/filewriter@npm:*":
+  version: 0.0.30
+  resolution: "@types/filewriter@npm:0.0.30"
+  checksum: 95d9484e1ba9ed8e2c670042ac49ddeab4c6f365e4297befdd9a3eee9596fd65808f064dd79e2a2ed2cecde46055c73736618d28e22d90dbdfd2f8be67d65ebe
+  languageName: node
+  linkType: hard
+
+"@types/har-format@npm:*":
+  version: 1.2.13
+  resolution: "@types/har-format@npm:1.2.13"
+  checksum: d322ee0282bc9206c697ec04c0a19abe8df581e2fe0f04114fd51d28fa854092ebdfbfcff66f9f2d661c93274230c4545a42df352d42cd01874517a77f2764bc
   languageName: node
   linkType: hard
 
@@ -615,6 +648,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "browser-extension-bypass-paywalls@workspace:."
   dependencies:
+    "@types/chrome": ^0.0.246
     "@types/node": ^20.8.0
     "@typescript-eslint/eslint-plugin": ^6.4.0
     "@typescript-eslint/parser": ^6.7.3

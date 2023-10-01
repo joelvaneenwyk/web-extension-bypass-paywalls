@@ -18,10 +18,13 @@
     "url": "git+https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls.git"
   },
   "scripts": {
+    "lint": "eslint \"./*.js\" \"./src/**/*.js\"",
+    "lint:fix": "eslint \"./*.js\" \"./src/**/*.js\" --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "1.0.0",
   "dependencies": {
+    "@types/chrome": "^0.0.246",
     "@types/node": "^20.8.0",
     "@typescript-eslint/parser": "^6.7.3",
     "@yarnpkg/sdks": "^3.0.0-rc.52"

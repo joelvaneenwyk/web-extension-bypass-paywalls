@@ -21,8 +21,7 @@ function selectPane(e) {
 }
 
 // Saves options to extensionApi.storage
-function saveOptions () {
-
+function saveOptions() {
   const sites = $$('#bypass_sites input').reduce(function (memo, inputEl) {
     if (inputEl.checked) {
       memo[inputEl.dataset.key] = inputEl.dataset.value;
@@ -36,8 +35,8 @@ function saveOptions () {
     .filter(s => s);
 
   extensionApi.storage.sync.set({
-    sites: sites,
-    customSites: customSites
+    sites,
+    customSites
   }, function () {
     // Update status to let user know options were saved.
     const status = $('#status');
@@ -58,7 +57,7 @@ function saveOptions () {
 function renderOptions () {
   extensionApi.storage.sync.get({
     sites: {},
-    customSites: [],
+    customSites: []
   }, function (items) {
     // Render supported sites
     const sites = items.sites;
@@ -112,7 +111,7 @@ function init() {
     el.addEventListener('click', selectPane);
   }
 
-  selectPane({target: $('#tabs button:first-child')});
+  selectPane({ target: $('#tabs button:first-child') });
 
   if (extensionApi === chrome) {
     document.body.classList.add('customSitesEnabled');
