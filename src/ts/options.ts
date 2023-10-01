@@ -38,68 +38,74 @@ function saveOptions() {
     return memo;
   }, {});
 
-  const customSites = $<HTMLInputElement>('#custom_sites').value
-    .split('\n')
-    .map(s => s.trim())
-    .filter(s => s);
+  const customSites = $<HTMLInputElement>('#custom_sites')
+    .value.split('\n')
+    .map((s) => s.trim())
+    .filter((s) => s);
 
-  extensionApi.storage.sync.set({
-    sites,
-    customSites
-  }, function () {
-    // Update status to let user know options were saved.
-    const status = $('#status');
-    status.textContent = 'Options saved';
-    setTimeout(function () {
-      status.textContent = '';
+  extensionApi.storage.sync.set(
+    {
+      sites,
+      customSites,
+    },
+    function () {
+      // Update status to let user know options were saved.
+      const status = $('#status');
+      status.textContent = 'Options saved';
+      setTimeout(function () {
+        status.textContent = '';
 
-      // Reload runtime so background script picks up changes
-      chrome.runtime.reload();
+        // Reload runtime so background script picks up changes
+        chrome.runtime.reload();
 
-      window.close();
-    }, 800);
-  });
+        window.close();
+      }, 800);
+    }
+  );
 }
 
 // Restores checkbox input states using the preferences
 // stored in extensionApi.storage.
 function renderOptions() {
-  extensionApi.storage.sync.get({
-    sites: {},
-    customSites: []
-  }, function (items) {
-    // Render supported sites
-    const sites = items.sites;
-    for (const key in defaultSites) {
-      if (!Object.prototype.hasOwnProperty.call(defaultSites, key)) {
-        continue;
+  extensionApi.storage.sync.get(
+    {
+      sites: {},
+      customSites: [],
+    },
+    function (items) {
+      // Render supported sites
+      const sites = items.sites;
+      for (const key in defaultSites) {
+        if (!Object.prototype.hasOwnProperty.call(defaultSites, key)) {
+          continue;
+        }
+
+        const value = defaultSites[key];
+        const labelEl = document.createElement('label');
+        const inputEl = document.createElement('input');
+        inputEl.type = 'checkbox';
+        inputEl.dataset.key = key;
+        inputEl.dataset.value = value;
+        inputEl.checked = key in sites || key.replace(/\s\(.*\)/, '') in sites;
+
+        labelEl.appendChild(inputEl);
+        labelEl.appendChild(document.createTextNode(key));
+        $('#bypass_sites').appendChild(labelEl);
       }
 
-      const value = defaultSites[key];
-      const labelEl = document.createElement('label');
-      const inputEl = document.createElement('input');
-      inputEl.type = 'checkbox';
-      inputEl.dataset.key = key;
-      inputEl.dataset.value = value;
-      inputEl.checked = (key in sites) || (key.replace(/\s\(.*\)/, '') in sites);
+      // Render custom sites
+      const customSites = items.customSites;
+      $<HTMLInputElement>('#custom_sites').value = customSites.join('\n');
 
-      labelEl.appendChild(inputEl);
-      labelEl.appendChild(document.createTextNode(key));
-      $('#bypass_sites').appendChild(labelEl);
+      // Set select all/none checkbox state.  Note: "indeterminate" checkboxes
+      // require `chrome_style: false` be set in manifest.json.  See
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=1097489
+      const nItems = $$('input[data-key]').length;
+      const nChecked = $$<HTMLInputElement>('input[data-key]').filter((el) => el.checked).length;
+      $<HTMLInputElement>('#select-all input').checked = nChecked / nItems > 0.5;
+      $<HTMLInputElement>('#select-all input').indeterminate = nChecked && nChecked != nItems;
     }
-
-    // Render custom sites
-    const customSites = items.customSites;
-    $<HTMLInputElement>('#custom_sites').value = customSites.join('\n');
-
-    // Set select all/none checkbox state.  Note: "indeterminate" checkboxes
-    // require `chrome_style: false` be set in manifest.json.  See
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=1097489
-    const nItems = $$('input[data-key]').length;
-    const nChecked = $$<HTMLInputElement>('input[data-key]').filter(el => el.checked).length;
-    $<HTMLInputElement>('#select-all input').checked = nChecked / nItems > 0.5;
-    $<HTMLInputElement>('#select-all input').indeterminate = nChecked && nChecked != nItems;
-  });
+  );
 }
 
 // Select/deselect all supported sites

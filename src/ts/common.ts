@@ -10,14 +10,18 @@ export class ExtensionApi {
   public readonly isChrome: boolean;
 
   constructor() {
-    if (typeof browser === 'object' &&
+    if (
+      typeof browser === 'object' &&
       typeof browser.runtime === 'object' &&
-      typeof browser.runtime.getManifest === 'function') {
+      typeof browser.runtime.getManifest === 'function'
+    ) {
       this._api = browser;
       this.isChrome = false;
-    } else if (typeof chrome === 'object' &&
+    } else if (
+      typeof chrome === 'object' &&
       typeof chrome.runtime === 'object' &&
-      typeof chrome.runtime.getManifest === 'function') {
+      typeof chrome.runtime.getManifest === 'function'
+    ) {
       this._api = chrome;
       this.isChrome = true;
     } else {

@@ -127,7 +127,7 @@ let _removeCookies = removeCookies;
 export const removeCookiesSelectHold = {
   'qz.com': ['gdpr'],
   'wsj.com': ['wsjregion'],
-  'seattletimes.com': ['st_newsletter_splash_seen']
+  'seattletimes.com': ['st_newsletter_splash_seen'],
 };
 
 // select only specific cookie(s) to drop from removeCookies domains
@@ -137,7 +137,7 @@ export const removeCookiesSelectDrop = {
   'fd.nl': ['socialread'],
   'humo.be': ['TID_ID'],
   'nrc.nl': ['counter'],
-  'speld.nl': ['speld-paywall']
+  'speld.nl': ['speld-paywall'],
 };
 
 // Override User-Agent with Googlebot
@@ -170,21 +170,20 @@ export const useGoogleBotSites = [
 // Override User-Agent with Bingbot
 const useBingBot = [];
 
-const useMsnBot = [
-  'haaretz.co.il',
-  'haaretz.com',
-  'themarker.com'
-];
+const useMsnBot = ['haaretz.co.il', 'haaretz.com', 'themarker.com'];
 
 // Contains google bot sites above plus any custom sites
 let _useGoogleBotSites = useGoogleBotSites;
 
 function setDefaultOptions() {
-  extensionApi.storage.sync.set({
-    sites: defaultSites
-  }, function () {
-    extensionApi.runtime.openOptionsPage();
-  });
+  extensionApi.storage.sync.set(
+    {
+      sites: defaultSites,
+    },
+    function () {
+      extensionApi.runtime.openOptionsPage();
+    }
+  );
 }
 
 // Block external scripts
@@ -210,24 +209,29 @@ const blockedRegexes = {
   'telegraph.co.uk': /.+telegraph\.co\.uk.+martech.+/,
   'thecourier.com.au': /.+cdn-au\.piano\.io\/api\/tinypass.+\.js/,
   'thenation.com': /thenation\.com\/.+\/paywall-script\.php/,
-  'thenational.scot': /(.+\.tinypass\.com\/.+|.+thenational\.scot.+omniture\.js|.+thenational\.scot.+responsive-sync.+)/,
+  'thenational.scot':
+    /(.+\.tinypass\.com\/.+|.+thenational\.scot.+omniture\.js|.+thenational\.scot.+responsive-sync.+)/,
   'thewrap.com': /thewrap\.com\/.+\/wallkit\.js/,
   'wsj.com': /cdn\.ampproject\.org\/v\d\/amp-access-.+\.js/,
   'historyextra.com': /.+\.evolok\.net\/.+\/authorize\/.+/,
   'barrons.com': /cdn\.ampproject\.org\/v\d\/amp-access-.+\.js/,
   'irishtimes.com': /cdn\.ampproject\.org\/v\d\/amp-access-.+\.js/,
-  'elmercurio.com': /(merreader\.emol\.cl\/assets\/js\/merPramV2.js|staticmer\.emol\.cl\/js\/inversiones\/PramModal.+\.js)/,
-  'sloanreview.mit.edu': /(.+\.tinypass\.com\/.+|.+\.netdna-ssl\.com\/wp-content\/themes\/smr\/assets\/js\/libs\/welcome-ad\.js)/,
+  'elmercurio.com':
+    /(merreader\.emol\.cl\/assets\/js\/merPramV2.js|staticmer\.emol\.cl\/js\/inversiones\/PramModal.+\.js)/,
+  'sloanreview.mit.edu':
+    /(.+\.tinypass\.com\/.+|.+\.netdna-ssl\.com\/wp-content\/themes\/smr\/assets\/js\/libs\/welcome-ad\.js)/,
   'latercera.com': /.+\.cxense\.com\/+/,
   'lesechos.fr': /.+\.tinypass\.com\/.+/,
   'thehindu.com': /ajax\.cloudflare\.com\/cdn-cgi\/scripts\/.+\/cloudflare-static\/rocket-loader\.min\.js/,
   'technologyreview.com': /.+\.blueconic\.net\/.+/,
   'spectator.us': /(cdn\.cxense\.com\/.+|\.tinypass\.com\/.+)/,
-  'gelocal.it': /(\.repstatic\.it\/minify\/sites\/gelocal\/.+\/config\.cache(_\d)?\.php|cdn\.ampproject\.org\/v\d\/amp-(access|ad)-.+\.js)/,
+  'gelocal.it':
+    /(\.repstatic\.it\/minify\/sites\/gelocal\/.+\/config\.cache(_\d)?\.php|cdn\.ampproject\.org\/v\d\/amp-(access|ad)-.+\.js)/,
   'elmundo.es': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
   'time.com': /\/time\.com\/dist\/meter-wall-client-js\..+\.js/,
   'thestar.com': /\.com\/api\/overlaydata/,
-  'elpais.com': /(\.epimg\.net\/js\/.+\/(noticia|user)\.min\.js|\/elpais\.com\/arc\/subs\/p\.min\.js|cdn\.ampproject\.org\/v\d\/amp-(access|(sticky-)?ad|consent)-.+\.js)/,
+  'elpais.com':
+    /(\.epimg\.net\/js\/.+\/(noticia|user)\.min\.js|\/elpais\.com\/arc\/subs\/p\.min\.js|cdn\.ampproject\.org\/v\d\/amp-(access|(sticky-)?ad|consent)-.+\.js)/,
   'expansion.com': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
   'chicagobusiness.com': /(\.tinypass\.com\/|\.chicagobusiness\.com\/.+\/js\/js_.+\.js)/,
   'dailytelegraph.com.au': /cdn\.ampproject\.org\/v\d\/amp-(access|ad|consent)-.+\.js/,
@@ -244,30 +248,35 @@ const blockedRegexes = {
 };
 
 const userAgentDesktop = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
-const userAgentMobile = 'Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible ; Googlebot/2.1 ; +http://www.google.com/bot.html)';
+const userAgentMobile =
+  'Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible ; Googlebot/2.1 ; +http://www.google.com/bot.html)';
 const userAgentDesktopBingBot = 'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
-const userAgentMobileBingBot = 'Chrome/80.0.3987.92 Mobile Safari/537.36 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
+const userAgentMobileBingBot =
+  'Chrome/80.0.3987.92 Mobile Safari/537.36 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)';
 const userAgentMsnBot = 'msnbot/2.0b (+http://search.msn.com/msnbot.htm)';
 
 let enabledSites = [];
 
 // Get the enabled sites
-extensionApi.storage.sync.get({
-  sites: {},
-  customSites: []
-}, function (items) {
-  enabledSites = Object.values(items.sites).concat(items.customSites);
+extensionApi.storage.sync.get(
+  {
+    sites: {},
+    customSites: [],
+  },
+  function (items) {
+    enabledSites = Object.values(items.sites).concat(items.customSites);
 
-  // Use googlebot UA for custom sites
-  _useGoogleBotSites = useGoogleBotSites.concat(items.customSites);
+    // Use googlebot UA for custom sites
+    _useGoogleBotSites = useGoogleBotSites.concat(items.customSites);
 
-  // Remove cookies for custom sites
-  _removeCookies = removeCookies.concat(items.customSites);
+    // Remove cookies for custom sites
+    _removeCookies = removeCookies.concat(items.customSites);
 
-  if (extensionApi === chrome) {
-    initGA();
+    if (extensionApi === chrome) {
+      initGA();
+    }
   }
-});
+);
 
 // Listen for changes to options
 extensionApi.storage.onChanged.addListener(function (changes, namespace) {
@@ -294,7 +303,9 @@ extensionApi.tabs.onActivated.addListener(function (activeInfo) {
 });
 
 function updateBadge(activeTab) {
-  if (extensionApi.runtime.lastError || !activeTab) { return; }
+  if (extensionApi.runtime.lastError || !activeTab) {
+    return;
+  }
   const badgeText = getBadgeText(activeTab.url);
   extensionApi.browserAction.setBadgeBackgroundColor({ color: 'blue' });
   extensionApi.browserAction.setBadgeText({ text: badgeText });
@@ -305,43 +316,53 @@ function getBadgeText(currentUrl) {
 }
 
 // AMP redirect for dailytelegraph.com.au
-extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
-  if (!isSiteEnabled(details)) {
-    return;
-  }
-  const updatedUrl = decodeURIComponent(details.url.split('&dest=')[1].split('&')[0]).replace('www.', 'amp.');
-  return { redirectUrl: updatedUrl };
-},
+extensionApi.webRequest.onBeforeRequest.addListener(
+  function (details) {
+    if (!isSiteEnabled(details)) {
+      return;
+    }
+    const updatedUrl = decodeURIComponent(details.url.split('&dest=')[1].split('&')[0]).replace('www.', 'amp.');
+    return { redirectUrl: updatedUrl };
+  },
   { urls: ['*://www.dailytelegraph.com.au/subscribe/*'], types: ['main_frame'] },
   ['blocking']
 );
 
 // nytimes.com
-extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
-  if (!isSiteEnabled(details)) {
-    return;
-  }
-  let headers = details.responseHeaders;
-  headers = headers.map(function (header) {
-    if (header.name === 'x-frame-options') { header.value = 'SAMEORIGIN'; }
-    return header;
-  });
-  return {
-    responseHeaders: headers
-  };
-}, {
-  urls: ['*://*.nytimes.com/*']
-},
-  ['blocking', 'responseHeaders']);
+extensionApi.webRequest.onHeadersReceived.addListener(
+  function (details) {
+    if (!isSiteEnabled(details)) {
+      return;
+    }
+    let headers = details.responseHeaders;
+    headers = headers.map(function (header) {
+      if (header.name === 'x-frame-options') {
+        header.value = 'SAMEORIGIN';
+      }
+      return header;
+    });
+    return {
+      responseHeaders: headers,
+    };
+  },
+  {
+    urls: ['*://*.nytimes.com/*'],
+  },
+  ['blocking', 'responseHeaders']
+);
 
 // Disable javascript for these sites
-extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
-  const headerReferer = details.originUrl ? details.originUrl : details.initiator;
-  if (!isSiteEnabled(details) && (!enabledSites.includes('generalpaywallbypass') || matchUrlDomain('japantimes.co.jp', headerReferer))) {
-    return;
-  }
-  return { cancel: true };
-},
+extensionApi.webRequest.onBeforeRequest.addListener(
+  function (details) {
+    const headerReferer = details.originUrl ? details.originUrl : details.initiator;
+    if (
+      !isSiteEnabled(details) &&
+      (!enabledSites.includes('generalpaywallbypass') || matchUrlDomain('japantimes.co.jp', headerReferer))
+    ) {
+      return;
+    }
+    return { cancel: true };
+  },
   {
     urls: [
       '*://*.newstatesman.com/*',
@@ -349,9 +370,9 @@ extensionApi.webRequest.onBeforeRequest.addListener(function (details) {
       '*://*.piano.io/*',
       '*://*.poool.fr/*',
       '*://*.qiota.com/*',
-      '*://*.tinypass.com/*'
+      '*://*.tinypass.com/*',
     ],
-    types: ['script']
+    types: ['script'],
   },
   ['blocking']
 );
@@ -361,180 +382,190 @@ if (Object.prototype.hasOwnProperty.call(extensionApi.webRequest.OnBeforeSendHea
   extraInfoSpec.push('extraHeaders');
 }
 
-extensionApi.webRequest.onBeforeSendHeaders.addListener(function (details) {
-  let requestHeaders = details.requestHeaders;
+extensionApi.webRequest.onBeforeSendHeaders.addListener(
+  function (details) {
+    let requestHeaders = details.requestHeaders;
 
-  let headerReferer = '';
-  for (const n in requestHeaders) {
-    if (requestHeaders[n].name.toLowerCase() === 'referer') {
-      headerReferer = requestHeaders[n].value;
-      continue;
-    }
-  }
-
-  // check for blocked regular expression: domain enabled, match regex, block on an internal or external regex
-  const blockedDomains = Object.keys(blockedRegexes);
-  const domain = matchUrlDomain(blockedDomains, headerReferer);
-  if (domain && details.url.match(blockedRegexes[domain]) && isSiteEnabled({ url: headerReferer })) {
-    return { cancel: true };
-  }
-
-  if (!isSiteEnabled(details) && !matchUrlDomain('cdn.ampproject.org', details.url)) {
-    return;
-  }
-
-  const tabId = details.tabId;
-  let useUserAgentMobile = false;
-  let setReferer = false;
-
-  // if referer exists, set it to google
-  requestHeaders = requestHeaders.map(function (requestHeader) {
-    if (requestHeader.name === 'Referer') {
-      if (details.url.includes('cooking.nytimes.com/api/v1/users/bootstrap')) {
-        // this fixes images not being loaded on cooking.nytimes.com main page
-        // referrer has to be *nytimes.com otherwise returns 403
-        requestHeader.value = 'https://cooking.nytimes.com';
-      } else if (matchUrlDomain('fd.nl', details.url)) {
-        requestHeader.value = 'https://www.facebook.com/';
-      } else if (matchUrlDomain('medium.com', details.url)) {
-        requestHeader.value = 'https://t.co/x?amp=1';
-      } else {
-        requestHeader.value = 'https://www.google.com/';
+    let headerReferer = '';
+    for (const n in requestHeaders) {
+      if (requestHeaders[n].name.toLowerCase() === 'referer') {
+        headerReferer = requestHeaders[n].value;
+        continue;
       }
-      setReferer = true;
-    }
-    if (requestHeader.name === 'User-Agent') {
-      useUserAgentMobile = requestHeader.value.toLowerCase().includes('mobile');
     }
 
-    return requestHeader;
-  });
-
-  // otherwise add it
-  if (!setReferer) {
-    if (matchUrlDomain('fd.nl', details.url)) {
-      requestHeaders.push({
-        name: 'Referer',
-        value: 'https://www.facebook.com/'
-      });
-    } else if (matchUrlDomain('medium.com', details.url)) {
-      requestHeaders.push({
-        name: 'Referer',
-        value: 'https://t.co/x?amp=1'
-      });
-    } else {
-      requestHeaders.push({
-        name: 'Referer',
-        value: 'https://www.google.com/'
-      });
+    // check for blocked regular expression: domain enabled, match regex, block on an internal or external regex
+    const blockedDomains = Object.keys(blockedRegexes);
+    const domain = matchUrlDomain(blockedDomains, headerReferer);
+    if (domain && details.url.match(blockedRegexes[domain]) && isSiteEnabled({ url: headerReferer })) {
+      return { cancel: true };
     }
-  }
 
-  // override User-Agent to use Googlebot
-  const useGoogleBot = _useGoogleBotSites.some(function (item) {
-    return typeof item === 'string' && matchUrlDomain(item, details.url);
-  });
+    if (!isSiteEnabled(details) && !matchUrlDomain('cdn.ampproject.org', details.url)) {
+      return;
+    }
 
-  if (useGoogleBot) {
-    requestHeaders.push({
-      name: 'User-Agent',
-      value: useUserAgentMobile ? userAgentMobile : userAgentDesktop
-    });
-    requestHeaders.push({
-      name: 'X-Forwarded-For',
-      value: '66.249.66.1'
-    });
-  }
+    const tabId = details.tabId;
+    let useUserAgentMobile = false;
+    let setReferer = false;
 
-  // override User-Agent to use Bingbot
-  if (matchUrlDomain(useBingBot, details.url)) {
-    requestHeaders.push({
-      name: 'User-Agent',
-      value: useUserAgentMobile ? userAgentMobileBingBot : userAgentDesktopBingBot
-    });
-  }
-
-  // override User-Agent to use Google AdsBot Mobile Web
-  if (matchUrlDomain(useMsnBot, details.url)) {
-    requestHeaders.push({
-      name: 'User-Agent',
-      value: userAgentMsnBot
-    });
-  }
-
-  // remove cookies before page load
-  const enabledCookies = allowCookies.some(function (site) {
-    return matchUrlDomain(site, details.url);
-  });
-  if (!enabledCookies) {
+    // if referer exists, set it to google
     requestHeaders = requestHeaders.map(function (requestHeader) {
-      if (requestHeader.name === 'Cookie') {
-        requestHeader.value = '';
+      if (requestHeader.name === 'Referer') {
+        if (details.url.includes('cooking.nytimes.com/api/v1/users/bootstrap')) {
+          // this fixes images not being loaded on cooking.nytimes.com main page
+          // referrer has to be *nytimes.com otherwise returns 403
+          requestHeader.value = 'https://cooking.nytimes.com';
+        } else if (matchUrlDomain('fd.nl', details.url)) {
+          requestHeader.value = 'https://www.facebook.com/';
+        } else if (matchUrlDomain('medium.com', details.url)) {
+          requestHeader.value = 'https://t.co/x?amp=1';
+        } else {
+          requestHeader.value = 'https://www.google.com/';
+        }
+        setReferer = true;
       }
+      if (requestHeader.name === 'User-Agent') {
+        useUserAgentMobile = requestHeader.value.toLowerCase().includes('mobile');
+      }
+
       return requestHeader;
     });
-  }
 
-  if (tabId !== -1) {
-    extensionApi.tabs.get(tabId, function (currentTab) {
-      // Validate url of current tab to avoid injecting script to unrelated sites
-      if (currentTab?.url && isSiteEnabled(currentTab)) {
-        // run contentScript inside tab
-        extensionApi.tabs.executeScript(tabId, {
-          file: 'src/js/contentScript.js',
-          runAt: 'document_start'
-        }, function (res) {
-          if (extensionApi.runtime.lastError || res[0]) {
-
-          }
+    // otherwise add it
+    if (!setReferer) {
+      if (matchUrlDomain('fd.nl', details.url)) {
+        requestHeaders.push({
+          name: 'Referer',
+          value: 'https://www.facebook.com/',
+        });
+      } else if (matchUrlDomain('medium.com', details.url)) {
+        requestHeaders.push({
+          name: 'Referer',
+          value: 'https://t.co/x?amp=1',
+        });
+      } else {
+        requestHeaders.push({
+          name: 'Referer',
+          value: 'https://www.google.com/',
         });
       }
-    });
-  }
+    }
 
-  return { requestHeaders };
-}, {
-  urls: ['<all_urls>']
-}, extraInfoSpec);
+    // override User-Agent to use Googlebot
+    const useGoogleBot = _useGoogleBotSites.some(function (item) {
+      return typeof item === 'string' && matchUrlDomain(item, details.url);
+    });
+
+    if (useGoogleBot) {
+      requestHeaders.push({
+        name: 'User-Agent',
+        value: useUserAgentMobile ? userAgentMobile : userAgentDesktop,
+      });
+      requestHeaders.push({
+        name: 'X-Forwarded-For',
+        value: '66.249.66.1',
+      });
+    }
+
+    // override User-Agent to use Bingbot
+    if (matchUrlDomain(useBingBot, details.url)) {
+      requestHeaders.push({
+        name: 'User-Agent',
+        value: useUserAgentMobile ? userAgentMobileBingBot : userAgentDesktopBingBot,
+      });
+    }
+
+    // override User-Agent to use Google AdsBot Mobile Web
+    if (matchUrlDomain(useMsnBot, details.url)) {
+      requestHeaders.push({
+        name: 'User-Agent',
+        value: userAgentMsnBot,
+      });
+    }
+
+    // remove cookies before page load
+    const enabledCookies = allowCookies.some(function (site) {
+      return matchUrlDomain(site, details.url);
+    });
+    if (!enabledCookies) {
+      requestHeaders = requestHeaders.map(function (requestHeader) {
+        if (requestHeader.name === 'Cookie') {
+          requestHeader.value = '';
+        }
+        return requestHeader;
+      });
+    }
+
+    if (tabId !== -1) {
+      extensionApi.tabs.get(tabId, function (currentTab) {
+        // Validate url of current tab to avoid injecting script to unrelated sites
+        if (currentTab?.url && isSiteEnabled(currentTab)) {
+          // run contentScript inside tab
+          extensionApi.tabs.executeScript(
+            tabId,
+            {
+              file: 'src/js/contentScript.js',
+              runAt: 'document_start',
+            },
+            function (res) {
+              if (extensionApi.runtime.lastError || res[0]) {
+              }
+            }
+          );
+        }
+      });
+    }
+
+    return { requestHeaders };
+  },
+  {
+    urls: ['<all_urls>'],
+  },
+  extraInfoSpec
+);
 
 // remove cookies after page load
-extensionApi.webRequest.onCompleted.addListener(function (details) {
-  let domainToRemove;
-  for (const domain of _removeCookies) {
-    if (enabledSites.includes(domain) && matchUrlDomain(domain, details.url)) {
-      domainToRemove = domain;
-      break;
-    }
-  }
-  if (domainToRemove) {
-    extensionApi.cookies.getAll({ domain: domainToRemove }, function (cookies) {
-      for (const ck of cookies) {
-        const cookie = {
-          url: (ck.secure ? 'https://' : 'http://') + ck.domain + ck.path,
-          name: ck.name,
-          storeId: ck.storeId
-        };
-        // .firstPartyDomain = undefined on Chrome (doesn't support it)
-        if (ck.firstPartyDomain !== undefined) {
-          cookie.firstPartyDomain = ck.firstPartyDomain;
-        }
-        const cookieDomain = ck.domain;
-        const rcDomain = cookieDomain.replace(/^(\.?www\.|\.)/, '');
-        // hold specific cookie(s) from removeCookies domains
-        if ((rcDomain in removeCookiesSelectHold) && removeCookiesSelectHold[rcDomain].includes(ck.name)) {
-          continue; // don't remove specific cookie
-        }
-        // drop only specific cookie(s) from removeCookies domains
-        if ((rcDomain in removeCookiesSelectDrop) && !(removeCookiesSelectDrop[rcDomain].includes(ck.name))) {
-          continue; // only remove specific cookie
-        }
-        extensionApi.cookies.remove(cookie);
+extensionApi.webRequest.onCompleted.addListener(
+  function (details) {
+    let domainToRemove;
+    for (const domain of _removeCookies) {
+      if (enabledSites.includes(domain) && matchUrlDomain(domain, details.url)) {
+        domainToRemove = domain;
+        break;
       }
-    });
+    }
+    if (domainToRemove) {
+      extensionApi.cookies.getAll({ domain: domainToRemove }, function (cookies) {
+        for (const ck of cookies) {
+          const cookie = {
+            url: (ck.secure ? 'https://' : 'http://') + ck.domain + ck.path,
+            name: ck.name,
+            storeId: ck.storeId,
+          };
+          // .firstPartyDomain = undefined on Chrome (doesn't support it)
+          if (ck.firstPartyDomain !== undefined) {
+            cookie.firstPartyDomain = ck.firstPartyDomain;
+          }
+          const cookieDomain = ck.domain;
+          const rcDomain = cookieDomain.replace(/^(\.?www\.|\.)/, '');
+          // hold specific cookie(s) from removeCookies domains
+          if (rcDomain in removeCookiesSelectHold && removeCookiesSelectHold[rcDomain].includes(ck.name)) {
+            continue; // don't remove specific cookie
+          }
+          // drop only specific cookie(s) from removeCookies domains
+          if (rcDomain in removeCookiesSelectDrop && !removeCookiesSelectDrop[rcDomain].includes(ck.name)) {
+            continue; // only remove specific cookie
+          }
+          extensionApi.cookies.remove(cookie);
+        }
+      });
+    }
+  },
+  {
+    urls: ['<all_urls>'],
   }
-}, {
-  urls: ['<all_urls>']
-});
+);
 
 // nytimes.com fix
 extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
@@ -558,10 +589,13 @@ extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
 function initGA() {
   (function (i, s, o, g, r, a, m) {
     i.GoogleAnalyticsObject = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments);
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    (i[r] =
+      i[r] ||
+      function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }),
+      (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
     a.async = 1;
     a.src = g;
     m.parentNode.insertBefore(a, m);
@@ -582,9 +616,13 @@ function isSiteEnabled(details) {
 
 function matchDomain(domains, hostname) {
   let matchedDomain = false;
-  if (!hostname) { hostname = window.location.hostname; }
-  if (typeof domains === 'string') { domains = [domains]; }
-  domains.some(domain => (hostname === domain || hostname.endsWith('.' + domain)) && (matchedDomain = domain));
+  if (!hostname) {
+    hostname = window.location.hostname;
+  }
+  if (typeof domains === 'string') {
+    domains = [domains];
+  }
+  domains.some((domain) => (hostname === domain || hostname.endsWith('.' + domain)) && (matchedDomain = domain));
   return matchedDomain;
 }
 
