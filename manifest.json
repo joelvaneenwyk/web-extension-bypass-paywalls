@@ -1,28 +1,25 @@
 {
+  "manifest_version": 3,
+  "name": "Bypass Paywalls",
+  "description": "Bypass News Sites' Paywalls",
+  "version": "1.8.2",
   "background": {
-    "scripts": [
-      "src/js/common.js",
-      "src/js/sites.js",
-      "src/js/background.js"
-    ]
+    "service_worker": "src/js/background.js"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "128": "src/icons/bypass.png"
     },
     "default_popup": "src/html/popup.html"
   },
-  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
-  "description": "Bypass News Sites' Paywalls",
+  //"content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "homepage_url": "https://github.com/joelvaneenwyk/bypass-paywalls-extension/blob/main/README.md",
   "icons": {
     "128": "src/icons/bypass.png"
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3PRmcRnHFZwHUlCgoTAdBjc9nUjmJo8l8kvkl/OZV6biZFAGUQGdxF1xoGhRccWA7qfQrZdPwcM1VQoVS/1F+87XiutKTe/HNsTAFvOcVS0tjCSH6DOHpewkMUBZujwTIeo7UXUVmCPQ1UbVd6m8KmHYtSHYlaX0uXRcguWhLmO5hASxw4onvAD0uql/t/ntxsIATwn4hVApg0VZhy0QAbMany8/5ByKPa19mCQwsIdRkcpG+PNHTLWPDgeGoDL7S0DxIduraRhTlrDX/zy5ETu6NWq6r+/jRzmXAjx+vSDCU5Ps2YG8QwdCL4Zl+CNVdQrnqz4X1zfPFJ1FFmUSpwIDAQAB",
-  "manifest_version": 3,
-  "name": "Bypass Paywalls",
   "options_ui": {
-    "chrome_style": false,
+    // "chrome_style": false,
     "page": "src/html/options.html"
   },
   "permissions": [
@@ -31,8 +28,5 @@
     "webRequest",
     "webRequestBlocking",
     "<all_urls>"
-  ],
-  "short_name": "Bypass Paywall",
-  "update_url": "https://raw.githubusercontent.com/joelvaneenwyk/bypass-paywalls-extension/main/src/updates/updates.xml",
-  "version": "1.8.1"
+  ]
 }
