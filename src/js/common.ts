@@ -1,4 +1,7 @@
-/* eslint-env webextensions, browser */
+/**
+ * Bypass Paywalls
+ */
+
 const extensionApi =
     (typeof browser === 'object' &&
      typeof browser.runtime === 'object' &&

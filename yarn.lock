@@ -193,6 +193,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/firefox-webext-browser@npm:^111.0.2":
+  version: 111.0.2
+  resolution: "@types/firefox-webext-browser@npm:111.0.2"
+  checksum: eb11040ac9cf66461b14ec1205cb031c80dfc2cb617580a520bd98d417b3e310489eeb1d1e3a7652d013ce4a5e92536e6f6798009a85cedfed6724b5cbc5fb6e
+  languageName: node
+  linkType: hard
+
 "@types/har-format@npm:*":
   version: 1.2.13
   resolution: "@types/har-format@npm:1.2.13"
@@ -668,6 +675,7 @@ __metadata:
     "@eslint/js": ^8.50.0
     "@types/chrome": ^0.0.246
     "@types/eslint": ^8.44.3
+    "@types/firefox-webext-browser": ^111.0.2
     "@types/node": ^20.8.0
     "@typescript-eslint/eslint-plugin": ^6.7.3
     "@typescript-eslint/parser": ^6.7.3

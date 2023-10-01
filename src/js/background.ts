@@ -1,4 +1,6 @@
-'use strict';
+/**
+ * Bypass Paywalls
+ */
 
 const restrictions = {
   'adweek.com': /^((?!\.adweek\.com\/(.+\/)?(amp|agencyspy|tvnewser|tvspy)\/).)*$/,
