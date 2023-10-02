@@ -506,7 +506,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
           // extensionApi.tabs.executeScript(
           //   tabId,
           //   {
-          //     file: 'src/js/contentScript.js',
+          //     file: 'dist/js/contentScript.js',
           //     runAt: 'document_start',
           //   },
           //   function (/*res*/) {
