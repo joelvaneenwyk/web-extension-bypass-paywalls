@@ -24,7 +24,7 @@ sed 's/src\/.*\///g' "${BRANCH_ROOT}/manifest-ff.json" >"${TEMP_DIR}/temp-ff-man
 sed -i 's/updates\.json/src\/updates\/updates.json/g' "${TEMP_DIR}/temp-ff-manifest.json"
 
 # Strip subdirectories for background.js
-sed 's/src\/.*\///g' "${BRANCH_ROOT}/src/js/background.js" >"${TEMP_DIR}/temp-background.js"
+sed 's/src\/.*\///g' "${BRANCH_ROOT}/dist/js/background.js" >"${TEMP_DIR}/temp-background.js"
 
 # Strip subdirectories for options html file
 sed 's/\.\.\/js\///g' "${BRANCH_ROOT}/src/html/options.html" >"${TEMP_DIR}/temp-options.html"
@@ -36,11 +36,11 @@ HTML_FILES=(
     "${TEMP_DIR}/temp-options.html"
     "${TEMP_DIR}/temp-popup.html")
 JS_FILES=(
-    "${BRANCH_ROOT}/src/js/common.js"
-    "${BRANCH_ROOT}/src/js/sites.js"
-    "${BRANCH_ROOT}/src/js/contentScript.js"
-    "${BRANCH_ROOT}/src/js/options.js"
-    "${BRANCH_ROOT}/src/js/version.js"
+    "${BRANCH_ROOT}/dist/js/common.js"
+    "${BRANCH_ROOT}/dist/js/sites.js"
+    "${BRANCH_ROOT}/dist/js/contentScript.js"
+    "${BRANCH_ROOT}/dist/js/options.js"
+    "${BRANCH_ROOT}/dist/js/version.js"
     "${TEMP_DIR}/temp-background.js")
 GEN_FILES=(
     "${JS_FILES[@]}"

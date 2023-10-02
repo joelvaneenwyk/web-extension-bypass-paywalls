@@ -1,9 +1,9 @@
 {
   "background": {
     "scripts": [
-      "src/js/common.js",
-      "src/js/sites.js",
-      "src/js/background.js"
+      "dist/js/common.js",
+      "dist/js/sites.js",
+      "dist/js/background.js"
     ]
   },
   "content_scripts": [
@@ -80,7 +80,7 @@
         "*://*.scmp.com/*"
       ],
       "js": [
-        "src/js/contentScript.js"
+        "dist/js/contentScript.js"
       ]
     }
   ],
