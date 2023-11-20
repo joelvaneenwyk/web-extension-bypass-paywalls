@@ -229,7 +229,7 @@ Only large or major sites will be considered. Usually premium articles cannot be
 PRs are welcome.
 
 1. If making a PR to add a new site, confirm your changes actually bypass the paywall.
-2. At a minimum these files need to be updated: `README.md`, `manifest-ff.json`, `src/js/sites.js`, and possibly `src/js/background.js`, and/or `src/js/contentScript.js`.
+2. At a minimum these files need to be updated: `README.md`, `manifest-ff.json`, `dist/js/sites.js`, and possibly `dist/js/background.js`, and/or `dist/js/contentScript.js`.
 3. Follow existing code-style and use camelCase.
 4. Use [JavaScript Semi-Standard Style linter](https://github.com/standard/semistandard). Don't need to follow it exactly. There will be some errors (e.g., do not use it on `sites.js`).
 

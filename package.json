@@ -1,0 +1,62 @@
+{
+  "name": "browser-extension-bypass-paywalls",
+  "author": "imadamdev",
+  "description": "Bypass News Sites' Paywalls",
+  "license": "MIT",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.6.3",
+  "bugs": {
+    "url": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls/issues"
+  },
+  "homepage": "https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls#readme",
+  "keywords": [
+    "extension",
+    "paywalls"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelvaneenwyk/browser-extension-bypass-paywalls.git"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs production",
+    "check": "esbuild --outdir=dist/js/ --minify --sourcemap --bundle src/ts/background.ts src/ts/contentScript.ts src/ts/options.ts",
+    "lint": "yarn eslint \"./src/**/*.ts\"",
+    "lint:fix": "yarn prettier --write \"./src/**/*.ts\" && yarn eslint \"./src/**/*.ts\" --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@eslint/js": "^8.50.0",
+    "@types/chrome": "^0.0.246",
+    "@types/eslint": "^8.44.3",
+    "@types/firefox-webext-browser": "^111.0.2",
+    "@types/node": "^20.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "@yarnpkg/sdks": "^3.0.0-rc.52",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "^0.19.4",
+    "esbuild-plugin-import-glob": "^0.1.1",
+    "esbuild-plugin-replace": "^1.4.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-functional": "^6.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jest": "^27.4.2",
+    "eslint-plugin-json-files": "^3.0.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-regexp": "^1.15.0",
+    "eslint-plugin-svelte": "^2.33.2",
+    "eslint-plugin-unicorn": "^48.0.1",
+    "globals": "^13.22.0",
+    "prettier": "^3.0.3",
+    "tslib": "2.6.2",
+    "typescript": "^5.2.2"
+  }
+}

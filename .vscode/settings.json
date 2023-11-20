@@ -1,0 +1,35 @@
+{
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "[typescript]": {
+    "editor.maxTokenizationLineLength": 2500,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "[javascript]": {
+    "editor.maxTokenizationLineLength": 2500,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "cSpell.words": [
+    "Ámbito",
+    "webextensions"
+  ],
+  "vscode-nmake-tools.workspaceBuildDirectories": [
+    "."
+  ],
+  "vscode-nmake-tools.installRazzleSourcesFormatterExtension": false,
+  "vscode-nmake-tools.installOsRepoRustHelperExtension": false,
+  "sarif-viewer.connectToGithubCodeScanning": "off",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js"
+}

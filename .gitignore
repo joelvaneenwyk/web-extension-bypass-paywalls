@@ -1,3 +1,9 @@
 build/output
 .build/
 dist/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.pnp.cjs
+.pnp.loader.mjs
+node_modules/
