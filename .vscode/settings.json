@@ -31,5 +31,5 @@
   "vscode-nmake-tools.installRazzleSourcesFormatterExtension": false,
   "vscode-nmake-tools.installOsRepoRustHelperExtension": false,
   "sarif-viewer.connectToGithubCodeScanning": "off",
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.js"
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs"
 }
