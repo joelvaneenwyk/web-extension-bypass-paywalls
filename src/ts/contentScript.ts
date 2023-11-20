@@ -2,7 +2,7 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './common';
+import { extensionApi } from './shared/common';
 
 if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'elmundo.es', 'scmp.com', 'nytimes.com'])) {
   window.localStorage.clear();
@@ -74,7 +74,7 @@ if (matchDomain('elmercurio.com')) {
         const divElem = document.createElement('div');
         divElem.setAttribute('data-element', 'articleBodyBlocks');
         const textArray = jsonText.split('\n\n');
-        textArray.forEach((pText) => {
+        textArray.forEach((pText: string) => {
           const pDiv = document.createElement('p');
           pDiv.setAttribute('class', 'ArticleBodyBlocks__paragraph ArticleBodyBlocks__paragraph--nieuws');
           pDiv.innerText = pText;
@@ -111,7 +111,7 @@ if (matchDomain('elmercurio.com')) {
     }, 300); // Delay (in milliseconds)
   } else {
     const url = window.location.href;
-    function main(element) {
+    function main(element: any) {
       removeDOMElement(element);
       window.location.href = url.split('?')[0] + '?outputType=amp';
     }
@@ -449,7 +449,7 @@ if (matchDomain('elmercurio.com')) {
       removeDOMElement(aboBanner);
       const url = window.location.href;
       const html = document.documentElement.outerHTML;
-      let state;
+      let state: string;
       const split1 = html.split('window.__PRELOADED_STATE__=')[1];
       const split2 = split1.split('</script>')[0].trim();
       if (split2.includes('; window.__DATA__=')) {
@@ -794,10 +794,10 @@ if (matchDomain('elmercurio.com')) {
   }
 }
 
-function matchDomain(domains) {
+function matchDomain(inputDomains: string | string[]) {
   const hostname = window.location.hostname;
   const domains = (typeof inputDomains === 'string') ? [inputDomains] : inputDomains;
-  return domains.some((domain) => hostname === domain || hostname.endsWith('.' + domain));
+  return domains.some((domain: string) => hostname === domain || hostname.endsWith('.' + domain));
 }
 
 export function updatePage() {
@@ -871,7 +871,7 @@ export function updatePage() {
           const divElem = document.createElement('div');
           divElem.setAttribute('data-element', 'articleBodyBlocks');
           const textArray = jsonText.split('\n\n');
-          textArray.forEach((pText) => {
+          textArray.forEach((pText: string) => {
             const pDiv = document.createElement('p');
             pDiv.setAttribute('class', 'ArticleBodyBlocks__paragraph ArticleBodyBlocks__paragraph--nieuws');
             pDiv.innerText = pText;
@@ -908,7 +908,7 @@ export function updatePage() {
       }, 300); // Delay (in milliseconds)
     } else {
       const url = window.location.href;
-      function main(element) {
+      function main(element: any) {
         removeDOMElement(element);
         window.location.href = url.split('?')[0] + '?outputType=amp';
       }
@@ -1238,7 +1238,7 @@ export function updatePage() {
         removeDOMElement(aboBanner);
         const url = window.location.href;
         const html = document.documentElement.outerHTML;
-        let state;
+        let state: string;
         const split1 = html.split('window.__PRELOADED_STATE__=')[1];
         const split2 = split1.split('</script>')[0].trim();
         if (split2.includes('; window.__DATA__=')) {
@@ -1596,7 +1596,7 @@ export function updatePage() {
   }
 }
 
-export function waitDOMElement(selector, tagName = '', callback, multiple = false) {
+export function waitDOMElement(selector: string, tagName = '', callback: { (element: any): void; (element: any): void; (arg0: Element): void; }, multiple = false) {
   new window.MutationObserver(function (mutations) {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
@@ -1617,7 +1617,7 @@ export function waitDOMElement(selector, tagName = '', callback, multiple = fals
   });
 }
 
-export function removeDOMElement(...elements) {
+export function removeDOMElement(...elements: Element[]) {
   for (const element of elements) {
     if (element) {
       element.remove();
@@ -1625,7 +1625,18 @@ export function removeDOMElement(...elements) {
   }
 }
 
-export function removeClassesByPrefix(el, prefix) {
+type ElementStyle = Element & {
+  style: string;
+}
+
+export function hideDOMElement(...elements: Element[]) {
+  for (let element of elements) {
+    if (element && (element as ElementStyle).style !== undefined)
+      (element as ElementStyle).style = 'display:none;';
+  }
+}
+
+export function removeClassesByPrefix(el: Element, prefix: string) {
   for (const clazz of el.classList) {
     if (clazz.startsWith(prefix)) {
       el.classList.remove(clazz);
@@ -1634,7 +1645,7 @@ export function removeClassesByPrefix(el, prefix) {
 }
 
 // Prevent element from being added the first time to the DOM
-export function blockElement(selector, blockAlways = false) {
+export function blockElement(selector: string, blockAlways = false) {
   new window.MutationObserver(function (mutations) {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
