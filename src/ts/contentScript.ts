@@ -2,7 +2,7 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './shared/common';
+import { extensionApi } from 'shared/common';
 
 if (!matchDomain(['seekingalpha.com', 'sfchronicle.com', 'cen.acs.org', 'elmundo.es', 'scmp.com', 'nytimes.com'])) {
   window.localStorage.clear();

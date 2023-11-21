@@ -2,9 +2,9 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './shared/common';
-import { defaultSites } from './shared/sites';
-import { setVersion } from './shared/version';
+import { extensionApi } from 'shared/common';
+import { defaultSites } from 'shared/sites';
+import { setVersion } from 'shared/version';
 
 // Shortcut for document.querySelector()
 export function $<E extends Element = Element>(sel: string, el: ParentNode = document): E | null {
@@ -33,14 +33,14 @@ export function selectPane<E extends Object & { target: any }>(e: E) {
 // Saves options to extensionApi.storage
 export function saveOptions() {
   const sites = $$<HTMLInputElement>('#bypass_sites input').reduce(function (memo, inputEl) {
-    if (inputEl.checked) {
+    if (inputEl.checked && inputEl.dataset.key) {
       memo[inputEl.dataset.key] = inputEl.dataset.value;
     }
     return memo;
   }, {});
 
   const customSites = $<HTMLInputElement>('#custom_sites')
-    .value.split('\n')
+    ?.value.split('\n')
     .map((s) => s.trim())
     .filter((s) => s);
 
@@ -52,6 +52,9 @@ export function saveOptions() {
     function () {
       // Update status to let user know options were saved.
       const status = $('#status');
+      if (status === null) {
+        return;
+      }
       status.textContent = 'Options saved';
       setTimeout(function () {
         status.textContent = '';
@@ -91,7 +94,7 @@ export function renderOptions() {
 
         labelEl.appendChild(inputEl);
         labelEl.appendChild(document.createTextNode(key));
-        $('#bypass_sites').appendChild(labelEl);
+        $('#bypass_sites')?.appendChild(labelEl);
       }
 
       // Render custom sites

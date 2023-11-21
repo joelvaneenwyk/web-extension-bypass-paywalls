@@ -5,7 +5,7 @@
  * @description Version number for the extension.
  */
 
-import { extensionApi } from './common';
+import { extensionApi } from 'shared/common';
 
 export function setVersion() {
   const manifestData = extensionApi !== undefined

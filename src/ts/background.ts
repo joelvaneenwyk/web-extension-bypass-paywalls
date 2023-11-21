@@ -2,8 +2,8 @@
  * Bypass Paywalls
  */
 
-import { extensionApi } from './shared/common';
-import { defaultSites } from './shared/sites';
+import { extensionApi } from 'shared/common';
+import { defaultSites } from 'shared/sites';
 
 export const restrictions = {
   'adweek.com': /^((?!\.adweek\.com\/(.+\/)?(amp|agencyspy|tvnewser|tvspy)\/).)*$/,
@@ -168,9 +168,9 @@ export const useGoogleBotSites = [
 ];
 
 // Override User-Agent with Bingbot
-const useBingBot = [];
+const useBingBot: string[] = [];
 
-const useMsnBot = ['haaretz.co.il', 'haaretz.com', 'themarker.com'];
+const useMsnBot: string[] = ['haaretz.co.il', 'haaretz.com', 'themarker.com'];
 
 // Contains google bot sites above plus any custom sites
 let _useGoogleBotSites = useGoogleBotSites;
@@ -263,7 +263,7 @@ extensionApi.storage.sync.get(
     sites: {},
     customSites: [],
   },
-  function (items) {
+  function (items: { sites: any; customSites: ConcatArray<string>; }) {
     enabledSites = Object.values(items.sites).concat(items.customSites);
 
     // Use googlebot UA for custom sites
@@ -279,7 +279,7 @@ extensionApi.storage.sync.get(
 );
 
 // Listen for changes to options
-extensionApi.storage.onChanged.addListener(function (changes /*, namespace*/) {
+extensionApi.storage.onChanged.addListener(function (changes: { sites: { newValue: any; }; } /*, namespace*/) {
   if (changes.sites?.newValue) {
     const sites = changes.sites.newValue;
     enabledSites = Object.values(sites);
@@ -287,7 +287,7 @@ extensionApi.storage.onChanged.addListener(function (changes /*, namespace*/) {
 });
 
 // Set and show default options on install
-extensionApi.runtime.onInstalled.addListener(function (details) {
+extensionApi.runtime.onInstalled.addListener(function (details: { reason: string; }) {
   if (details.reason === 'install') {
     setDefaultOptions();
   } else if (details.reason === 'update') {
@@ -295,14 +295,14 @@ extensionApi.runtime.onInstalled.addListener(function (details) {
   }
 });
 
-extensionApi.tabs.onUpdated.addListener(function (tabId, info, tab) {
+extensionApi.tabs.onUpdated.addListener(function (tabId: any, info: any, tab: any) {
   updateBadge(tab);
 });
-extensionApi.tabs.onActivated.addListener(function (activeInfo) {
+extensionApi.tabs.onActivated.addListener(function (activeInfo: { tabId: any; }) {
   extensionApi.tabs.get(activeInfo.tabId, updateBadge);
 });
 
-function updateBadge(activeTab) {
+function updateBadge(activeTab: { url: any; }) {
   if (extensionApi.runtime.lastError || !activeTab) {
     return;
   }
@@ -311,13 +311,13 @@ function updateBadge(activeTab) {
   extensionApi.browserAction.setBadgeText({ text: badgeText });
 }
 
-function getBadgeText(currentUrl) {
+function getBadgeText(currentUrl: any) {
   return currentUrl && isSiteEnabled({ url: currentUrl }) ? 'ON' : '';
 }
 
 // AMP redirect for dailytelegraph.com.au
 extensionApi.webRequest.onBeforeRequest.addListener(
-  function (details) {
+  function (details: { url: string; }) {
     if (!isSiteEnabled(details)) {
       return;
     }
@@ -330,12 +330,12 @@ extensionApi.webRequest.onBeforeRequest.addListener(
 
 // nytimes.com
 extensionApi.webRequest.onHeadersReceived.addListener(
-  function (details) {
+  function (details: { responseHeaders: any; }) {
     if (!isSiteEnabled(details)) {
       return;
     }
     let headers = details.responseHeaders;
-    headers = headers.map(function (header) {
+    headers = headers.map(function (header: { name: string; value: string; }) {
       if (header.name === 'x-frame-options') {
         header.value = 'SAMEORIGIN';
       }
@@ -353,7 +353,7 @@ extensionApi.webRequest.onHeadersReceived.addListener(
 
 // Disable javascript for these sites
 extensionApi.webRequest.onBeforeRequest.addListener(
-  function (details) {
+  function (details: { originUrl: any; initiator: any; }) {
     const headerReferer = details.originUrl ? details.originUrl : details.initiator;
     if (
       !isSiteEnabled(details) &&
@@ -383,7 +383,7 @@ const extraInfoSpec = ['blocking', 'requestHeaders'];
 // }
 
 extensionApi.webRequest.onBeforeSendHeaders.addListener(
-  function (details) {
+  function (details: { requestHeaders: any; url: string; tabId: any; }) {
     let requestHeaders = details.requestHeaders;
 
     let headerReferer = '';
@@ -410,7 +410,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
     let setReferer = false;
 
     // if referer exists, set it to google
-    requestHeaders = requestHeaders.map(function (requestHeader) {
+    requestHeaders = requestHeaders.map(function (requestHeader: { name: string; value: string; }) {
       if (requestHeader.name === 'Referer') {
         if (details.url.includes('cooking.nytimes.com/api/v1/users/bootstrap')) {
           // this fixes images not being loaded on cooking.nytimes.com main page
@@ -489,7 +489,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
       return matchUrlDomain(site, details.url);
     });
     if (!enabledCookies) {
-      requestHeaders = requestHeaders.map(function (requestHeader) {
+      requestHeaders = requestHeaders.map(function (requestHeader: { name: string; value: string; }) {
         if (requestHeader.name === 'Cookie') {
           requestHeader.value = '';
         }
@@ -498,7 +498,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
     }
 
     if (tabId !== -1) {
-      extensionApi.tabs.get(tabId, function (currentTab) {
+      extensionApi.tabs.get(tabId, function (currentTab: { url: any; }) {
         // Validate url of current tab to avoid injecting script to unrelated sites
         if (currentTab?.url && isSiteEnabled(currentTab)) {
           // run contentScript inside tab
@@ -529,8 +529,8 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
 
 // remove cookies after page load
 extensionApi.webRequest.onCompleted.addListener(
-  function (details) {
-    let domainToRemove;
+  function (details: { url: string; }) {
+    let domainToRemove: string;
     for (const domain of _removeCookies) {
       if (enabledSites.includes(domain) && matchUrlDomain(domain, details.url)) {
         domainToRemove = domain;
@@ -571,12 +571,12 @@ extensionApi.webRequest.onCompleted.addListener(
 );
 
 // nytimes.com fix
-extensionApi.webRequest.onHeadersReceived.addListener(function (details) {
+extensionApi.webRequest.onHeadersReceived.addListener(function (details: { responseHeaders: any; }) {
   if (!isSiteEnabled(details)) {
     return;
   }
   let headers = details.responseHeaders;
-  headers = headers.map(function (header) {
+  headers = headers.map(function (header: { name: string; value: string; }) {
     if (header.name === 'x-frame-options') { header.value = 'SAMEORIGIN'; }
     return header;
   });
@@ -609,7 +609,7 @@ function initGA() {
   // ga('send', 'pageview');
 }
 
-function isSiteEnabled(details) {
+function isSiteEnabled(details: { url: any; }) {
   const enabledSite = matchUrlDomain(enabledSites, details.url);
   if (enabledSite in restrictions) {
     return restrictions[enabledSite].test(details.url);
