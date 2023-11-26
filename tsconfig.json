@@ -2,12 +2,31 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ES2015",
+    "module": "CommonJS",
     "noEmitOnError": true,
-    "outDir": "src/js",
+    "outDir": "dist/js/",
+    "lib": [
+      "DOM",
+      "ES2015",
+      "ScriptHost"
+    ],
     "sourceMap": true,
-    "strict": false,
-    "target": "es2016"
+    "skipDefaultLibCheck": true,
+    "strict": false, // Lots of 'any' and null references
+    "target": "es2016",
+    "types": [
+      "chrome",
+      "web",
+      "DOM"
+    ],
+    "paths": {
+      "*": [
+        "./src/ts/*"
+      ],
+      "shared/*": [
+        "./src/ts/shared/*"
+      ]
+    }
   },
   "include": [
     "./src/ts/*.ts"

@@ -16,7 +16,7 @@ const context = await esbuild.context({
   banner: {
     js: banner
   },
-  entryPoints: ['src/background.ts', 'src/contentScripts.ts', 'src/options.ts'],
+  entryPoints: ['ts/src/background.ts', 'ts/src/contentScripts.ts', 'ts/src/options.ts'],
   outdir: 'dist/js/',
   bundle: true,
   external: [
