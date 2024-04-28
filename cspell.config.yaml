@@ -11,7 +11,7 @@ dictionaries:
 dictionaryDefinitions:
   - addWords: true
     name: project-words
-    path: "./.vscode/dictionary.txt"
+    path: .vscode/dictionary.txt
 ignorePaths:
   - "*.svg"
   - node_modules

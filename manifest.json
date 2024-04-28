@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/chrome-manifest.json",
   "background": {
     "scripts": [
       "src/js/common.js",
