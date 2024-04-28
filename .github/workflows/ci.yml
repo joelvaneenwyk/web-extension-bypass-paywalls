@@ -11,19 +11,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
 
       - name: Build
-        run: ./build/build.sh
+        run: build/build.sh
 
       - name: Upload Chrome Extension (crx)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bypass-paywalls.crx
           path: |
             dist/bypass-paywalls.crx
 
       - name: Upload Firefox Extension (xpi)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bypass-paywalls.xpi
           path: |
