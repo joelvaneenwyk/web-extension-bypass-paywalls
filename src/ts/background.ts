@@ -302,7 +302,7 @@ extensionApi.tabs.onActivated.addListener(function (activeInfo: { tabId: any; })
   extensionApi.tabs.get(activeInfo.tabId, updateBadge);
 });
 
-function updateBadge(activeTab: { url: any; }) {
+function updateBadge(activeTab: any) {
   if (extensionApi.runtime.lastError || !activeTab) {
     return;
   }
@@ -330,7 +330,9 @@ extensionApi.webRequest.onBeforeRequest.addListener(
 
 // nytimes.com
 extensionApi.webRequest.onHeadersReceived.addListener(
+  // @ts-ignore
   function (details: { responseHeaders: any; }) {
+    // @ts-ignore
     if (!isSiteEnabled(details)) {
       return;
     }
@@ -353,9 +355,11 @@ extensionApi.webRequest.onHeadersReceived.addListener(
 
 // Disable javascript for these sites
 extensionApi.webRequest.onBeforeRequest.addListener(
+  // @ts-ignore
   function (details: { originUrl: any; initiator: any; }) {
     const headerReferer = details.originUrl ? details.originUrl : details.initiator;
     if (
+      // @ts-ignore
       !isSiteEnabled(details) &&
       (!enabledSites.includes('generalpaywallbypass') || matchUrlDomain('japantimes.co.jp', headerReferer))
     ) {
@@ -383,6 +387,7 @@ const extraInfoSpec = ['blocking', 'requestHeaders'];
 // }
 
 extensionApi.webRequest.onBeforeSendHeaders.addListener(
+  // @ts-ignore
   function (details: { requestHeaders: any; url: string; tabId: any; }) {
     let requestHeaders = details.requestHeaders;
 
@@ -498,6 +503,7 @@ extensionApi.webRequest.onBeforeSendHeaders.addListener(
     }
 
     if (tabId !== -1) {
+      // @ts-ignore
       extensionApi.tabs.get(tabId, function (currentTab: { url: any; }) {
         // Validate url of current tab to avoid injecting script to unrelated sites
         if (currentTab?.url && isSiteEnabled(currentTab)) {
@@ -571,7 +577,9 @@ extensionApi.webRequest.onCompleted.addListener(
 );
 
 // nytimes.com fix
+// @ts-ignore
 extensionApi.webRequest.onHeadersReceived.addListener(function (details: { responseHeaders: any; }) {
+  // @ts-ignore
   if (!isSiteEnabled(details)) {
     return;
   }
@@ -586,7 +594,7 @@ extensionApi.webRequest.onHeadersReceived.addListener(function (details: { respo
 }, {
   urls: ['*://*.nytimes.com/*']
 },
-['blocking', 'responseHeaders']);
+  ['blocking', 'responseHeaders']);
 
 // Google Analytics to anonymously track DAU (Chrome only)
 function initGA() {

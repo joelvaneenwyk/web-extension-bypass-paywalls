@@ -1,0 +1,21 @@
+caseSensitive: false
+dictionaries:
+  - project-words
+  - en_US
+  - en-gb
+  - companies
+  - softwareTerms
+  - node
+  - html
+  - typescript
+dictionaryDefinitions:
+  - addWords: true
+    name: project-words
+    path: "./.vscode/dictionary.txt"
+ignorePaths:
+  - "*.svg"
+  - node_modules
+  - ".yarn"
+  - ".build"
+  - "/project-words.txt"
+version: "0.2"

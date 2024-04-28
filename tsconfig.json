@@ -11,14 +11,10 @@
       "ScriptHost"
     ],
     "sourceMap": true,
+    "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strict": false, // Lots of 'any' and null references
     "target": "es2016",
-    "types": [
-      "chrome",
-      "web",
-      "DOM"
-    ],
     "paths": {
       "*": [
         "./src/ts/*"
