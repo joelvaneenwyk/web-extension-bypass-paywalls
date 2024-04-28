@@ -3,18 +3,14 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "[typescript]": {
+  "[typescript][javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.maxTokenizationLineLength": 2500,
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    }
-  },
-  "[javascript]": {
-    "editor.maxTokenizationLineLength": 2500,
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll": "explicit",
+      "source.organizeImports": "always"
     }
   },
   "eslint.experimental.useFlatConfig": true,

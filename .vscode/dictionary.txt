@@ -24,6 +24,7 @@ blueconic
 bostonglobe
 brisbanetimes
 businessinsider
+bwbx
 bypasspaywalls
 Caixin
 caixinglobal
@@ -134,6 +135,7 @@ Mercurio
 mercurynews
 merreader
 Messaggero
+meteringjs
 Mexicon
 mexiconewsdaily
 msnbot
