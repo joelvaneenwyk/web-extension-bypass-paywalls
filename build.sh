@@ -34,7 +34,7 @@ function rename_file() {
 }
 
 function build() {
-    BRANCH_ROOT="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" &>/dev/null && cd ../ && pwd)"
+    BRANCH_ROOT="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" &>/dev/null && pwd)"
 
     OUTPUT_DIR="${BRANCH_ROOT}/dist"
     TEMP_DIR="${BRANCH_ROOT}/.build"
