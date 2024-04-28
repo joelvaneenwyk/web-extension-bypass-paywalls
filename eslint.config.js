@@ -9,9 +9,6 @@ import globals from "globals";
 import js from "@eslint/js";
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import pluginFunctional from 'eslint-plugin-functional';
-import pluginImport from 'eslint-plugin-import';
-import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 
 /** @type { import("eslint").Linter.FlatConfig[] } */
@@ -32,7 +29,6 @@ export default [
         ...globals.webextensions,
         ...globals.browser,
         ...globals.node,
-        ...globals.es6,
         ...globals.commonjs
       },
       parser: typescriptParser,
